@@ -9,6 +9,7 @@ public class Main {
         try {
             Connection connection = DbConfig.getConnection();
             if (connection != null) {
+                System.out.println(connection);
                 System.out.println("Connected to the database successfully!");
             } else {
                 System.out.println("Failed to connect to the database.");
