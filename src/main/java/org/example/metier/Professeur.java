@@ -1,4 +1,4 @@
 package org.example.metier;
 
-public interface Empruntable {
+public class Professeur {
 }

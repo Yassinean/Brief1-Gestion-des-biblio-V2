@@ -1,4 +1,4 @@
 package org.example.metier;
 
-public abstract class Utilisateur {
+public class Utilisateur {
 }
