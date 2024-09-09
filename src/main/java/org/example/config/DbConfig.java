@@ -13,9 +13,8 @@ public class DbConfig {
 
     private DbConfig() throws SQLException {
         try {
-            Class.forName("org.postgresql.Driver");
             this.connection = DriverManager.getConnection(url, username, password);
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("Impossible de se connecter à la base de données", e);
         }
     }

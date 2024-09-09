@@ -1,0 +1,63 @@
+package org.example.persistance.Implementation;
+
+import org.example.config.DbConfig;
+import org.example.persistance.Interface.EtudiantDaoInterface;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class EtudiantDaoImp implements EtudiantDaoInterface {
+
+
+    private final Connection connection;
+
+    public EtudiantDaoImp(Connection connection) {
+        this.connection = connection;
+    }
+
+
+    @Override
+    public void createEtudiant(String id, String name, String email) {
+        try (Connection connection = DbConfig.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(
+                     "INSERT INTO etudiant (id, name, email) VALUES (CAST(? AS UUID), ?, ?)")) {
+            stmt.setString(1, id);
+            stmt.setString(2, name);
+            stmt.setString(3, email);
+            stmt.executeUpdate();
+            System.out.println("L'étudiant a été ajouté avec succès");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateEtudiant() {
+
+    }
+
+    @Override
+    public boolean deleteEtudiant(String name) {
+        boolean isDeleted = false;
+        String query = "DELETE FROM utilisateur WHERE id = ?";
+        try (Connection connection = DbConfig.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, name);
+            isDeleted = statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isDeleted;
+    }
+
+    @Override
+    public void getEtudiant() {
+
+    }
+
+    @Override
+    public void getAllEtudiants() {
+
+    }
+}
