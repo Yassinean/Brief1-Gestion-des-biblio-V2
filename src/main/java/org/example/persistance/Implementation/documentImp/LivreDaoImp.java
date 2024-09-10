@@ -1,4 +1,4 @@
-package org.example.persistance.Implementation;
+package org.example.persistance.Implementation.documentImp;
 
 import org.example.config.DbConfig;
 import org.example.metier.Document;

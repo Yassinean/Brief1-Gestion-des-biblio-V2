@@ -9,6 +9,7 @@ public class Document {
     protected LocalDate datePublication;
     protected int nombreDePages;
     protected boolean isEmprunted = false;
+    protected boolean isReserved = false;
 
     public Document(String titre, String auteur, LocalDate datePublication, int nombreDePages) {
         this.titre = titre;
@@ -63,6 +64,14 @@ public class Document {
 
     public void setIsEmprunted(boolean isEmprunted){
         this.isEmprunted = isEmprunted;
+    }
+
+    public boolean getIsReserved(){
+        return isEmprunted;
+    }
+
+    public void setIsReserved(boolean isReserved){
+        this.isReserved = Document.this.isReserved;
     }
 
 

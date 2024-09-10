@@ -1,4 +1,4 @@
-package org.example.persistance.Implementation;
+package org.example.persistance.Implementation.userImp;
 
 import org.example.config.DbConfig;
 import org.example.metier.Etudiant;
@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EtudiantDaoImp implements UtilisateurDaoInterface {
 
@@ -32,7 +34,7 @@ public class EtudiantDaoImp implements UtilisateurDaoInterface {
         Etudiant etudiant = (Etudiant) user;
         try (Connection connection = DbConfig.getInstance().getConnection();
              PreparedStatement stmt = connection.prepareStatement(
-                     "INSERT INTO etudiant (id, name, email) VALUES (CAST(? AS UUID), ?, ?)")) {
+                     "INSERT INTO etudiant (id, name, email) VALUES ( ?, ?, ?)")) {
             stmt.setInt(1, user.getId());
             stmt.setString(2,user.getName());
             stmt.setString(3, user.getEmail());
@@ -44,14 +46,30 @@ public class EtudiantDaoImp implements UtilisateurDaoInterface {
     }
 
     @Override
-    public void updateUtilisateur() {
+    public void updateUtilisateur(Utilisateur utilisateur) {
+        if(!(utilisateur instanceof Etudiant)){
+            throw new IllegalArgumentException("User must be of type Etudiant");
+        }
+
+        Etudiant etudiant = (Etudiant) utilisateur;
+        String sql = "UPDATE etudiant SET name = ?, email = ?, branche = ? WHERE id = ?";
+
+        try(PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1,etudiant.getName());
+            pstmt.setString(2,etudiant.getEmail());
+            pstmt.setString(4,etudiant.getBranche());
+            pstmt.setInt(5,etudiant.getId());
+            pstmt.executeUpdate();
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
 
     }
 
     @Override
     public void deleteUtilisateur(Integer id) {
         boolean isDeleted = false;
-        String query = "DELETE FROM utilisateur WHERE id = ?";
+        String query = "DELETE FROM etudiant WHERE id = ?";
         try (Connection connection = DbConfig.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
@@ -84,8 +102,24 @@ public class EtudiantDaoImp implements UtilisateurDaoInterface {
     }
 
     @Override
-    public void getAllUtilisateurs() {
+    public List<Utilisateur> getAllUtilisateurs() {
+        List<Utilisateur> etudiants = new ArrayList<>();
+        String sql = "SELECT * FROM etudiant";
 
+        try(PreparedStatement pstmt = connection.prepareStatement(sql)){
+            ResultSet res = pstmt.executeQuery();
+            if(res.next()){
+                Etudiant etudiant = new Etudiant(res.getInt("id"),
+                        res.getString("name"),
+                        res.getString("email"),
+                        res.getString("branche")
+                );
+                etudiants.add(etudiant);
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return etudiants;
     }
 }
 
