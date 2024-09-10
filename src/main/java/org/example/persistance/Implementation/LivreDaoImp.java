@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LivreDaoImp implements DocumentDaoInterface {
+
     private Connection connection;
 
     public LivreDaoImp() {
@@ -23,7 +24,7 @@ public class LivreDaoImp implements DocumentDaoInterface {
     @Override
     public void createDocument(Document document) {
         Livre livre = (Livre) document;
-        String sql = "INSERT INTO livre (titre, auteur, datePublication, nombreDePages, isbn) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO document (titre, auteur, datePublication, nombreDePages, isbn) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, livre.getTitre());
@@ -59,11 +60,11 @@ public class LivreDaoImp implements DocumentDaoInterface {
     }
 
     @Override
-    public void deleteDocument(Integer documentId) {
+    public void deleteDocument(Integer livreId) {
         String sql = "DELETE FROM livre WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, documentId);
+            statement.setInt(1, livreId);
             statement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -73,11 +74,11 @@ public class LivreDaoImp implements DocumentDaoInterface {
     }
 
     @Override
-    public void displayDocument(Integer documentId) {
+    public void displayDocument(Integer livreId) {
         String sql = "SELECT * FROM livre WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, documentId);
+            statement.setInt(1, livreId);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -115,7 +116,6 @@ public class LivreDaoImp implements DocumentDaoInterface {
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-
         }
         return livres;
 
@@ -147,4 +147,5 @@ public class LivreDaoImp implements DocumentDaoInterface {
         }
         return livres;
     }
+
 }
