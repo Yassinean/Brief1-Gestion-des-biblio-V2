@@ -5,8 +5,7 @@ public class Utilisateur {
     private String name;
     private String email;
 
-    public Utilisateur(int id, String name, String email) {
-        this.id = id;
+    public Utilisateur(String name, String email) {
         this.name = name;
         this.email = email;
     }

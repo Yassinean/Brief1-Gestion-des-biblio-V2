@@ -2,7 +2,7 @@ package org.example.metier;
 
 import java.time.LocalDate;
 
-public class Document {
+public abstract class Document {
     private int id;
     protected String titre;
     protected String auteur;
@@ -11,68 +11,68 @@ public class Document {
     protected boolean isEmprunted = false;
     protected boolean isReserved = false;
 
-    public Document(String titre, String auteur, LocalDate datePublication, int nombreDePages) {
+    public Document(String titre, String auteur, LocalDate datePublication, int nombreDePages, boolean isEmprunted, boolean isReserved) {
         this.titre = titre;
         this.auteur = auteur;
         this.datePublication = datePublication;
         this.nombreDePages = nombreDePages;
+        this.isEmprunted = isEmprunted;
+        this.isReserved = isReserved;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
-    public void setId(int id){
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getTitre(){
+    public String getTitre() {
         return titre;
     }
 
-    public void setTitre(String titre){
+    public void setTitre(String titre) {
         this.titre = titre;
     }
 
-    public String getAuteur(){
+    public String getAuteur() {
         return auteur;
     }
 
-    public void setAuteur(String auteur){
+    public void setAuteur(String auteur) {
         this.auteur = auteur;
     }
 
-    public int getNombreDePages(){
-        return nombreDePages;
-    }
-
-    public void setNombreDePages(int nombreDePages){
-        this.nombreDePages = nombreDePages;
-    }
-
-    public LocalDate getDate(){
+    public LocalDate getDatePublication() {
         return datePublication;
     }
 
-    public void setDate(LocalDate datePublication){
+    public void setDatePublication(LocalDate datePublication) {
         this.datePublication = datePublication;
     }
 
-    public boolean getIsEmprunted(){
+    public int getNombreDePages() {
+        return nombreDePages;
+    }
+
+    public void setNombreDePages(int nombreDePages) {
+        this.nombreDePages = nombreDePages;
+    }
+
+    public boolean isEmprunted() {
         return isEmprunted;
     }
 
-    public void setIsEmprunted(boolean isEmprunted){
-        this.isEmprunted = isEmprunted;
+    public void setEmprunted(boolean emprunted) {
+        isEmprunted = emprunted;
     }
 
-    public boolean getIsReserved(){
-        return isEmprunted;
+    public boolean isReserved() {
+        return isReserved;
     }
 
-    public void setIsReserved(boolean isReserved){
-        this.isReserved = Document.this.isReserved;
+    public void setReserved(boolean reserved) {
+        isReserved = reserved;
     }
-
-
 }

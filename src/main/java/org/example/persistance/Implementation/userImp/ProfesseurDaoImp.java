@@ -1,7 +1,6 @@
 package org.example.persistance.Implementation.userImp;
 
 import org.example.config.DbConfig;
-import org.example.metier.Etudiant;
 import org.example.metier.Professeur;
 import org.example.metier.Utilisateur;
 import org.example.persistance.Interface.UtilisateurDaoInterface;
@@ -35,10 +34,9 @@ public class ProfesseurDaoImp implements UtilisateurDaoInterface {
         Professeur professeur = (Professeur) user;
         try (Connection connection = DbConfig.getInstance().getConnection();
              PreparedStatement stmt = connection.prepareStatement(
-                     "INSERT INTO professeur (id, name, email) VALUES ( ?, ?, ?)")) {
-            stmt.setInt(1, user.getId());
-            stmt.setString(2, user.getName());
-            stmt.setString(3, user.getEmail());
+                     "INSERT INTO professeur (name, email) VALUES ( ?, ?)")) {
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getEmail());
             stmt.executeUpdate();
             System.out.println("Le professeur a été ajouté avec succès");
         } catch (SQLException e) {
@@ -89,7 +87,6 @@ public class ProfesseurDaoImp implements UtilisateurDaoInterface {
             ResultSet res = pstmt.executeQuery();
             if (res.next()) {
                 professeur = new Professeur(
-                        res.getInt("id"),
                         res.getString("name"),
                         res.getString("email"),
                         res.getString("matiere")
@@ -109,7 +106,7 @@ public class ProfesseurDaoImp implements UtilisateurDaoInterface {
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             ResultSet res = pstmt.executeQuery();
             if (res.next()) {
-                Professeur professeur = new Professeur(res.getInt("id"),
+                Professeur professeur = new Professeur(
                         res.getString("name"),
                         res.getString("email"),
                         res.getString("matiere")

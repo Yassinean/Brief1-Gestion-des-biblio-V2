@@ -5,8 +5,8 @@ import java.time.LocalDate;
 public class TheseUniversitaire extends Document{
     private String universite;
     private String domaine;
-    public TheseUniversitaire(String titre, String auteur, LocalDate datePublication, int nombreDePages , String universite , String domaine ) {
-        super(titre, auteur, datePublication, nombreDePages);
+    public TheseUniversitaire(String titre, String auteur, LocalDate datePublication, int nombreDePages , boolean isEmprunted , boolean isReserved ,String universite , String domaine ) {
+        super(titre, auteur, datePublication, nombreDePages, isEmprunted, isReserved);
         this.universite = universite;
         this.domaine = domaine;
     }

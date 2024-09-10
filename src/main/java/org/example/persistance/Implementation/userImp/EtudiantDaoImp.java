@@ -34,10 +34,10 @@ public class EtudiantDaoImp implements UtilisateurDaoInterface {
         Etudiant etudiant = (Etudiant) user;
         try (Connection connection = DbConfig.getInstance().getConnection();
              PreparedStatement stmt = connection.prepareStatement(
-                     "INSERT INTO etudiant (id, name, email) VALUES ( ?, ?, ?)")) {
-            stmt.setInt(1, user.getId());
-            stmt.setString(2,user.getName());
-            stmt.setString(3, user.getEmail());
+                     "INSERT INTO etudiant (name, email,branche) VALUES ( ?, ?, ?)")) {
+            stmt.setString(1,user.getName());
+            stmt.setString(2,user.getEmail());
+            stmt.setString(3, ((Etudiant) user).getBranche());
             stmt.executeUpdate();
             System.out.println("L'étudiant a été ajouté avec succès");
         } catch (SQLException e) {
@@ -55,10 +55,10 @@ public class EtudiantDaoImp implements UtilisateurDaoInterface {
         String sql = "UPDATE etudiant SET name = ?, email = ?, branche = ? WHERE id = ?";
 
         try(PreparedStatement pstmt = connection.prepareStatement(sql)){
-            pstmt.setString(1,etudiant.getName());
-            pstmt.setString(2,etudiant.getEmail());
+            pstmt.setInt(1,etudiant.getId());
+            pstmt.setString(2,etudiant.getName());
+            pstmt.setString(3,etudiant.getEmail());
             pstmt.setString(4,etudiant.getBranche());
-            pstmt.setInt(5,etudiant.getId());
             pstmt.executeUpdate();
         }catch (SQLException e){
             System.out.println(e.getMessage());
@@ -89,7 +89,6 @@ public class EtudiantDaoImp implements UtilisateurDaoInterface {
             ResultSet res = pstmt.executeQuery();
             if(res.next()){
                 etudiant = new Etudiant(
-                        res.getInt("id"),
                         res.getString("name"),
                         res.getString("email"),
                         res.getString("branche")
@@ -109,7 +108,7 @@ public class EtudiantDaoImp implements UtilisateurDaoInterface {
         try(PreparedStatement pstmt = connection.prepareStatement(sql)){
             ResultSet res = pstmt.executeQuery();
             if(res.next()){
-                Etudiant etudiant = new Etudiant(res.getInt("id"),
+                Etudiant etudiant = new Etudiant(
                         res.getString("name"),
                         res.getString("email"),
                         res.getString("branche")

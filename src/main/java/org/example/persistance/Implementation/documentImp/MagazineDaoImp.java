@@ -2,18 +2,18 @@ package org.example.persistance.Implementation.documentImp;
 
 import org.example.config.DbConfig;
 import org.example.metier.Document;
-import org.example.metier.Livre;
+import org.example.metier.Magazine;
 import org.example.persistance.Interface.DocumentDaoInterface;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LivreDaoImp implements DocumentDaoInterface {
+public class MagazineDaoImp implements DocumentDaoInterface {
 
     private Connection connection;
 
-    public LivreDaoImp() {
+    public MagazineDaoImp() {
         try {
             this.connection = DbConfig.getInstance().getConnection();
         } catch (SQLException e) {
@@ -23,15 +23,15 @@ public class LivreDaoImp implements DocumentDaoInterface {
 
     @Override
     public void createDocument(Document document) {
-        Livre livre = (Livre) document;
-        String sql = "INSERT INTO livre (titre, auteur, datePublication, nombreDePages, isbn) VALUES (?, ?, ?, ?, ?)";
+        Magazine magazine = (Magazine) document;
+        String sql = "INSERT INTO magazine (titre, auteur, datePublication, nombreDePages, numero) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, livre.getTitre());
-            statement.setString(2, livre.getAuteur());
-            statement.setDate(3, Date.valueOf(livre.getDate()));
-            statement.setInt(4, livre.getNombreDePages());
-            statement.setString(5, livre.getIsbn());
+            statement.setString(1, magazine.getTitre());
+            statement.setString(2, magazine.getAuteur());
+            statement.setDate(3, Date.valueOf(magazine.getDate()));
+            statement.setInt(4, magazine.getNombreDePages());
+            statement.setInt(5, magazine.getNumero());
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -42,16 +42,16 @@ public class LivreDaoImp implements DocumentDaoInterface {
 
     @Override
     public void updateDocument(Document document) {
-        Livre livre = (Livre) document;
-        String sql = "UPDATE livre SET titre = ?, auteur = ?, datePublication = ?, nombreDePages = ?, isbn = ? WHERE id = ?";
+        Magazine magazine = (Magazine) document;
+        String sql = "UPDATE magazine SET titre = ?, auteur = ?, datePublication = ?, nombreDePages = ?, numero = ? WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, livre.getTitre());
-            statement.setString(2, livre.getAuteur());
-            statement.setDate(3, Date.valueOf(livre.getDate()));
-            statement.setInt(4, livre.getNombreDePages());
-            statement.setString(5, livre.getIsbn());
-            statement.setInt(6, livre.getId());
+            statement.setString(1, magazine.getTitre());
+            statement.setString(2, magazine.getAuteur());
+            statement.setDate(3, Date.valueOf(magazine.getDate()));
+            statement.setInt(4, magazine.getNombreDePages());
+            statement.setInt(5, magazine.getNumero());
+            statement.setInt(6, magazine.getId());
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -60,11 +60,11 @@ public class LivreDaoImp implements DocumentDaoInterface {
     }
 
     @Override
-    public void deleteDocument(Integer livreId) {
-        String sql = "DELETE FROM livre WHERE id = ?";
+    public void deleteDocument(Integer magazineId) {
+        String sql = "DELETE FROM magazine WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, livreId);
+            statement.setInt(1, magazineId);
             statement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -74,11 +74,11 @@ public class LivreDaoImp implements DocumentDaoInterface {
     }
 
     @Override
-    public void displayDocument(Integer livreId) {
-        String sql = "SELECT * FROM livre WHERE id = ?";
+    public void displayDocument(Integer magazineId) {
+        String sql = "SELECT * FROM magazinw WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, livreId);
+            statement.setInt(1, magazineId);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -87,7 +87,7 @@ public class LivreDaoImp implements DocumentDaoInterface {
                 System.out.println("Auteur: " + resultSet.getString("auteur"));
                 System.out.println("Date de publication: " + resultSet.getDate("datePublication").toLocalDate());
                 System.out.println("Nombre de pages: " + resultSet.getInt("nombreDePages"));
-                System.out.println("ISBN: " + resultSet.getString("isbn"));
+                System.out.println("ISBN: " + resultSet.getInt("numero"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -97,34 +97,33 @@ public class LivreDaoImp implements DocumentDaoInterface {
 
     @Override
     public List<Document> displayAllDocuments() {
-        List<Document> livres = new ArrayList<>();
-        String sql = "SELECT * FROM livre";
+        List<Document> magazines = new ArrayList<>();
+        String sql = "SELECT * FROM magazine";
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()) {
-                Livre livre = new Livre(
-                        resultSet.getInt("id"),
+                Magazine magazine = new Magazine(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePages"),
-                        resultSet.getString("isbn")
+                        resultSet.getInt("numero")
                 );
-                livres.add(livre);
+                magazines.add(magazine);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return livres;
+        return magazines;
 
     }
 
     @Override
     public List<Document> searchDocument(String titre) {
-        List<Document> livres = new ArrayList<>();
-        String sql = "SELECT * FROM livre WHERE titre LIKE ?";
+        List<Document> magazines = new ArrayList<>();
+        String sql = "SELECT * FROM magazine WHERE titre LIKE ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             String searchPattern = "%" + titre + "%";
@@ -132,20 +131,19 @@ public class LivreDaoImp implements DocumentDaoInterface {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                Livre livre = new Livre(
-                        resultSet.getInt("id"),
+                Magazine magazine = new Magazine(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePages"),
-                        resultSet.getString("isbn")
+                        resultSet.getInt("numero")
                 );
-                livres.add(livre);
+                magazines.add(magazine);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return livres;
+        return magazines;
     }
 
 }
