@@ -7,6 +7,7 @@ import org.example.persistance.Interface.UtilisateurDaoInterface;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class EtudiantDaoImp implements UtilisateurDaoInterface {
@@ -32,9 +33,9 @@ public class EtudiantDaoImp implements UtilisateurDaoInterface {
         try (Connection connection = DbConfig.getInstance().getConnection();
              PreparedStatement stmt = connection.prepareStatement(
                      "INSERT INTO etudiant (id, name, email) VALUES (CAST(? AS UUID), ?, ?)")) {
-            stmt.setString(1, user.getName);
-            stmt.setString();
-            stmt.setString();
+            stmt.setInt(1, user.getId());
+            stmt.setString(2,user.getName());
+            stmt.setString(3, user.getEmail());
             stmt.executeUpdate();
             System.out.println("L'étudiant a été ajouté avec succès");
         } catch (SQLException e) {
@@ -61,8 +62,25 @@ public class EtudiantDaoImp implements UtilisateurDaoInterface {
     }
 
     @Override
-    public void getUtilisateur() {
+    public Utilisateur getUtilisateur(Integer userId) {
+        Etudiant etudiant = null;
+        String sql = "SELECT * FROM etudiant WHERE id = ?";
 
+        try(PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setInt(1,userId);
+            ResultSet res = pstmt.executeQuery();
+            if(res.next()){
+                etudiant = new Etudiant(
+                        res.getInt("id"),
+                        res.getString("name"),
+                        res.getString("email"),
+                        res.getString("branche")
+                );
+            }
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return etudiant;
     }
 
     @Override

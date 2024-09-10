@@ -1,4 +1,4 @@
 package org.example.metier;
 
-public class JournalScientifique {
+public class JournalScientifique extends Document{
 }

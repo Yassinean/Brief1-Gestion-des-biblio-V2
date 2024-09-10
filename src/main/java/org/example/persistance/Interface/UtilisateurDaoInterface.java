@@ -8,6 +8,6 @@ public interface UtilisateurDaoInterface {
     void createUtilisateur(Utilisateur utilisateur);
     void updateUtilisateur();
     void deleteUtilisateur(Integer utilisateurId);
-    void getUtilisateur();
+    Utilisateur getUtilisateur(Integer utilisateurId);
     void getAllUtilisateurs();
 }
