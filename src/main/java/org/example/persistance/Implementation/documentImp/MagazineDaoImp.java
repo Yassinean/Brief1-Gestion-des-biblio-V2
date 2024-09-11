@@ -109,8 +109,6 @@ public class MagazineDaoImp implements DocumentDaoInterface {
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePages"),
-                        resultSet.getBoolean("isEmprunted"),
-                        resultSet.getBoolean("isReserved"),
                         resultSet.getInt("numero")
                 );
                 magazines.add(magazine);
@@ -138,8 +136,6 @@ public class MagazineDaoImp implements DocumentDaoInterface {
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePages"),
-                        resultSet.getBoolean("isEmprunted"),
-                        resultSet.getBoolean("isReserved"),
                         resultSet.getInt("numero")
                 );
                 magazines.add(magazine);

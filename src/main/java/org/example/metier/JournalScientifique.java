@@ -6,8 +6,8 @@ import java.time.LocalDate;
 
 public class JournalScientifique extends Document {
     private String domaineRecherche;
-    public JournalScientifique(String titre, String auteur, LocalDate datePublication, int nombreDePages ,  String domaineRecherche, boolean isEmprunted , boolean isReserved) {
-        super(titre, auteur, datePublication, nombreDePages, isEmprunted, isReserved);
+    public JournalScientifique(String titre, String auteur, LocalDate datePublication, int nombreDePages ,  String domaineRecherche) {
+        super(titre, auteur, datePublication, nombreDePages);
         this.domaineRecherche = domaineRecherche;
     }
 
@@ -17,5 +17,10 @@ public class JournalScientifique extends Document {
 
     public void setDomaine(String domaineRecherche) {
         this.domaineRecherche = domaineRecherche;
+    }
+
+    @Override
+    public String afficherDetails() {
+        return "";
     }
 }

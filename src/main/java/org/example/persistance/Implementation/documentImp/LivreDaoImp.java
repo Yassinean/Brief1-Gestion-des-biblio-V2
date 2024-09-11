@@ -110,8 +110,6 @@ public class LivreDaoImp implements DocumentDaoInterface {
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePages"),
-                        resultSet.getBoolean("isEmprunted"),
-                        resultSet.getBoolean("isReserved"),
                         resultSet.getString("isbn")
                 );
                 livres.add(livre);
@@ -140,8 +138,6 @@ public class LivreDaoImp implements DocumentDaoInterface {
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePages"),
-                        resultSet.getBoolean("isEmprunted"),
-                        resultSet.getBoolean("isReserved"),
                         resultSet.getString("isbn")
                 );
                 livres.add(livre);

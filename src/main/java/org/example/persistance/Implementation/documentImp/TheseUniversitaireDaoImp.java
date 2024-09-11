@@ -112,8 +112,6 @@ public class TheseUniversitaireDaoImp implements DocumentDaoInterface {
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePages"),
-                        resultSet.getBoolean("isEmprunted"),
-                        resultSet.getBoolean("isReserved"),
                         resultSet.getString("universite"),
                         resultSet.getString("domaine")
                 );
@@ -142,8 +140,6 @@ public class TheseUniversitaireDaoImp implements DocumentDaoInterface {
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePages"),
-                        resultSet.getBoolean("isEmprunted"),
-                        resultSet.getBoolean("isReserved"),
                         resultSet.getString("universite"),
                         resultSet.getString("domaine")
                 );

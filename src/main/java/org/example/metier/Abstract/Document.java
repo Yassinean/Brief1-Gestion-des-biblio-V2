@@ -8,16 +8,13 @@ public abstract class Document {
     protected String auteur;
     protected LocalDate datePublication;
     protected int nombreDePages;
-    protected boolean isEmprunted = false;
-    protected boolean isReserved = false;
 
-    public Document(String titre, String auteur, LocalDate datePublication, int nombreDePages, boolean isEmprunted, boolean isReserved) {
+
+    public Document(String titre, String auteur, LocalDate datePublication, int nombreDePages) {
         this.titre = titre;
         this.auteur = auteur;
         this.datePublication = datePublication;
         this.nombreDePages = nombreDePages;
-        this.isEmprunted = isEmprunted;
-        this.isReserved = isReserved;
     }
 
     public int getId() {
@@ -60,19 +57,5 @@ public abstract class Document {
         this.nombreDePages = nombreDePages;
     }
 
-    public boolean isEmprunted() {
-        return isEmprunted;
-    }
-
-    public void setEmprunted(boolean emprunted) {
-        isEmprunted = emprunted;
-    }
-
-    public boolean isReserved() {
-        return isReserved;
-    }
-
-    public void setReserved(boolean reserved) {
-        isReserved = reserved;
-    }
+    public abstract String afficherDetails();
 }

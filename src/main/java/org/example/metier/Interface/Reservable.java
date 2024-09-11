@@ -2,7 +2,7 @@ package org.example.metier.Interface;
 
 public interface Reservable {
 
-    void reserver();
-    void annulerReservation();
+    boolean reserver();
+    boolean annulerReservation();
 
 }

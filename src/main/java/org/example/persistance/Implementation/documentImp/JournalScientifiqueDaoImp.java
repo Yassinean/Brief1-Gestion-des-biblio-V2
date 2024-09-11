@@ -108,9 +108,7 @@ public class JournalScientifiqueDaoImp implements DocumentDaoInterface {
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePages"),
-                        resultSet.getString("domainerechecher"),
-                        resultSet.getBoolean("isEmprunted"),
-                        resultSet.getBoolean("isReserved")
+                        resultSet.getString("domainerechecher")
                 );
                 journals.add(js);
             }
@@ -137,9 +135,7 @@ public class JournalScientifiqueDaoImp implements DocumentDaoInterface {
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePages"),
-                        resultSet.getString("domainerecherche"),
-                        resultSet.getBoolean("isEmprunted"),
-                        resultSet.getBoolean("isReserved")
+                        resultSet.getString("domainerecherche")
                 );
                 journals.add(js);
             }
