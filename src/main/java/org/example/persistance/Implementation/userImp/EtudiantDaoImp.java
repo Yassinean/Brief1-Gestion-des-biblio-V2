@@ -2,7 +2,7 @@ package org.example.persistance.Implementation.userImp;
 
 import org.example.config.DbConfig;
 import org.example.metier.Etudiant;
-import org.example.metier.Utilisateur;
+import org.example.metier.Abstract.Utilisateur;
 import org.example.persistance.Interface.UtilisateurDaoInterface;
 
 import java.sql.Connection;

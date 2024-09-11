@@ -1,8 +1,10 @@
 package org.example.metier;
 
+import org.example.metier.Abstract.Document;
+
 import java.time.LocalDate;
 
-public class Magazine extends Document{
+public class Magazine extends Document {
     private int numero;
 
 

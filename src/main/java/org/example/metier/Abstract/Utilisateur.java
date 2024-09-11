@@ -1,6 +1,6 @@
-package org.example.metier;
+package org.example.metier.Abstract;
 
-public class Utilisateur {
+public abstract class Utilisateur {
     private int id;
     private String name;
     private String email;

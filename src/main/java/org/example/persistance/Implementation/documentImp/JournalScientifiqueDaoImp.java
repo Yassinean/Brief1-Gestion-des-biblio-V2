@@ -1,7 +1,7 @@
 package org.example.persistance.Implementation.documentImp;
 
 import org.example.config.DbConfig;
-import org.example.metier.Document;
+import org.example.metier.Abstract.Document;
 import org.example.metier.JournalScientifique;
 import org.example.persistance.Interface.DocumentDaoInterface;
 

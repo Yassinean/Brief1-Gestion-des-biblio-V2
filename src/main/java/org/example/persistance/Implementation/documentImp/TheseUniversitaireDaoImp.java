@@ -2,18 +2,19 @@ package org.example.persistance.Implementation.documentImp;
 
 import org.example.config.DbConfig;
 import org.example.metier.Abstract.Document;
-import org.example.metier.Livre;
+import org.example.metier.JournalScientifique;
+import org.example.metier.TheseUniversitaire;
 import org.example.persistance.Interface.DocumentDaoInterface;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LivreDaoImp implements DocumentDaoInterface {
+public class TheseUniversitaireDaoImp implements DocumentDaoInterface {
 
     private Connection connection;
 
-    public LivreDaoImp() {
+    public TheseUniversitaireDaoImp() {
         try {
             this.connection = DbConfig.getInstance().getConnection();
         } catch (SQLException e) {
@@ -23,15 +24,16 @@ public class LivreDaoImp implements DocumentDaoInterface {
 
     @Override
     public void createDocument(Document document) {
-        Livre livre = (Livre) document;
-        String sql = "INSERT INTO livre (titre, auteur, datePublication, nombreDePages, isbn) VALUES (?, ?, ?, ?, ?)";
+        TheseUniversitaire theseUniversitaire = (TheseUniversitaire) document;
+        String sql = "INSERT INTO theseuniversitaire (titre, auteur, datePublication, nombreDePages, universite, domaine) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, livre.getTitre());
-            statement.setString(2, livre.getAuteur());
-            statement.setDate(3, Date.valueOf(livre.getDatePublication()));
-            statement.setInt(4, livre.getNombreDePages());
-            statement.setString(5, livre.getIsbn());
+            statement.setString(1, theseUniversitaire.getTitre());
+            statement.setString(2, theseUniversitaire.getAuteur());
+            statement.setDate(3, Date.valueOf(theseUniversitaire.getDatePublication()));
+            statement.setInt(4, theseUniversitaire.getNombreDePages());
+            statement.setString(5, theseUniversitaire.getUniversite());
+            statement.setString(6, theseUniversitaire.getDomaine());
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -42,16 +44,16 @@ public class LivreDaoImp implements DocumentDaoInterface {
 
     @Override
     public void updateDocument(Document document) {
-        Livre livre = (Livre) document;
-        String sql = "UPDATE livre SET titre = ?, auteur = ?, datePublication = ?, nombreDePages = ?, isbn = ? WHERE id = ?";
+        TheseUniversitaire theseUniversitaire = (TheseUniversitaire) document;
+        String sql = "UPDATE theseuniversitaire SET titre = ?, auteur = ?, datePublication = ?, nombreDePages = ?, universite = ?, domaine = ? WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, livre.getTitre());
-            statement.setString(2, livre.getAuteur());
-            statement.setDate(3, Date.valueOf(livre.getDatePublication()));
-            statement.setInt(4, livre.getNombreDePages());
-            statement.setString(5, livre.getIsbn());
-            statement.setInt(6, livre.getId());
+            statement.setString(1, theseUniversitaire.getTitre());
+            statement.setString(2, theseUniversitaire.getAuteur());
+            statement.setDate(3, Date.valueOf(theseUniversitaire.getDatePublication()));
+            statement.setInt(4, theseUniversitaire.getNombreDePages());
+            statement.setString(5, theseUniversitaire.getUniversite());
+            statement.setString(6, theseUniversitaire.getDomaine());
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -60,11 +62,11 @@ public class LivreDaoImp implements DocumentDaoInterface {
     }
 
     @Override
-    public void deleteDocument(Integer livreId) {
-        String sql = "DELETE FROM livre WHERE id = ?";
+    public void deleteDocument(Integer jsId) {
+        String sql = "DELETE FROM theseuniversitaire WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, livreId);
+            statement.setInt(1, jsId);
             statement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -74,11 +76,11 @@ public class LivreDaoImp implements DocumentDaoInterface {
     }
 
     @Override
-    public void displayDocument(Integer livreId) {
-        String sql = "SELECT * FROM livre WHERE id = ?";
+    public void displayDocument(Integer theseUId) {
+        String sql = "SELECT * FROM theseuniversitaire WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, livreId);
+            statement.setInt(1, theseUId);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -87,7 +89,8 @@ public class LivreDaoImp implements DocumentDaoInterface {
                 System.out.println("Auteur: " + resultSet.getString("auteur"));
                 System.out.println("Date de publication: " + resultSet.getDate("datePublication").toLocalDate());
                 System.out.println("Nombre de pages: " + resultSet.getInt("nombreDePages"));
-                System.out.println("ISBN: " + resultSet.getString("isbn"));
+                System.out.println("University: " + resultSet.getString("universite"));
+                System.out.println("Domaine: " + resultSet.getString("domaine"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -97,36 +100,36 @@ public class LivreDaoImp implements DocumentDaoInterface {
 
     @Override
     public List<Document> displayAllDocuments() {
-        List<Document> livres = new ArrayList<>();
-        String sql = "SELECT * FROM livre";
+        List<Document> journals = new ArrayList<>();
+        String sql = "SELECT * FROM theseuniversitaire";
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()) {
-                Livre livre = new Livre(
-                        resultSet.getInt("id"),
+                TheseUniversitaire js = new TheseUniversitaire(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePages"),
                         resultSet.getBoolean("isEmprunted"),
                         resultSet.getBoolean("isReserved"),
-                        resultSet.getString("isbn")
+                        resultSet.getString("universite"),
+                        resultSet.getString("domaine")
                 );
-                livres.add(livre);
+                journals.add(js);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return livres;
+        return journals;
 
     }
 
     @Override
     public List<Document> searchDocument(String titre) {
-        List<Document> livres = new ArrayList<>();
-        String sql = "SELECT * FROM livre WHERE titre LIKE ?";
+        List<Document> theseUniversitaire = new ArrayList<>();
+        String sql = "SELECT * FROM theseuniversitaire WHERE titre LIKE ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             String searchPattern = "%" + titre + "%";
@@ -134,22 +137,22 @@ public class LivreDaoImp implements DocumentDaoInterface {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                Livre livre = new Livre(
-                        resultSet.getInt("id"),
+                TheseUniversitaire theseU = new TheseUniversitaire(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePages"),
                         resultSet.getBoolean("isEmprunted"),
                         resultSet.getBoolean("isReserved"),
-                        resultSet.getString("isbn")
+                        resultSet.getString("universite"),
+                        resultSet.getString("domaine")
                 );
-                livres.add(livre);
+                theseUniversitaire.add(theseU);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return livres;
+        return theseUniversitaire;
     }
 
 }

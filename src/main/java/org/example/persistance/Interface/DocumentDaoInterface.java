@@ -1,6 +1,6 @@
 package org.example.persistance.Interface;
 
-import org.example.metier.Document;
+import org.example.metier.Abstract.Document;
 
 import java.util.List;
 

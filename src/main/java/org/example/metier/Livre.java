@@ -1,5 +1,7 @@
 package org.example.metier;
 
+import org.example.metier.Abstract.Document;
+
 import java.time.LocalDate;
 
 public class Livre extends Document {

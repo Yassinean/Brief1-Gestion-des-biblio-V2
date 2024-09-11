@@ -1,6 +1,8 @@
 package org.example.metier;
 
-public class Professeur extends Utilisateur{
+import org.example.metier.Abstract.Utilisateur;
+
+public class Professeur extends Utilisateur {
     private String matiere;
     public Professeur(String name, String email , String matiere) {
         super(name, email);

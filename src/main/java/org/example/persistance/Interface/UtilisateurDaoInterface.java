@@ -1,6 +1,6 @@
 package org.example.persistance.Interface;
 
-import org.example.metier.Utilisateur;
+import org.example.metier.Abstract.Utilisateur;
 
 import java.util.List;
 

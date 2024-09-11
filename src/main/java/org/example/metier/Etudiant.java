@@ -1,6 +1,8 @@
 package org.example.metier;
 
-public class Etudiant extends Utilisateur{
+import org.example.metier.Abstract.Utilisateur;
+
+public class Etudiant extends Utilisateur {
 
     private String branche;
 

@@ -1,8 +1,10 @@
 package org.example.metier;
 
+import org.example.metier.Abstract.Document;
+
 import java.time.LocalDate;
 
-public class JournalScientifique extends Document{
+public class JournalScientifique extends Document {
     private String domaineRecherche;
     public JournalScientifique(String titre, String auteur, LocalDate datePublication, int nombreDePages ,  String domaineRecherche, boolean isEmprunted , boolean isReserved) {
         super(titre, auteur, datePublication, nombreDePages, isEmprunted, isReserved);

@@ -1,4 +1,4 @@
-package org.example.metier;
+package org.example.metier.Abstract;
 
 import java.time.LocalDate;
 
