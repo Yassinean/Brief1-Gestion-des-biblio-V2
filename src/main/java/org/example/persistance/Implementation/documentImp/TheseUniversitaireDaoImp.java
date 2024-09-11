@@ -76,7 +76,8 @@ public class TheseUniversitaireDaoImp implements DocumentDaoInterface {
     }
 
     @Override
-    public void displayDocument(Integer theseUId) {
+    public Document displayDocument(Integer theseUId) {
+        List<Document> theses = new ArrayList<>();
         String sql = "SELECT * FROM theseuniversitaire WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -95,7 +96,7 @@ public class TheseUniversitaireDaoImp implements DocumentDaoInterface {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
+        return (Document) theses;
     }
 
     @Override
@@ -110,7 +111,7 @@ public class TheseUniversitaireDaoImp implements DocumentDaoInterface {
                 TheseUniversitaire js = new TheseUniversitaire(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getDate("datePublication").toLocalDate(),
+                        resultSet.getString("datePublication"),
                         resultSet.getInt("nombreDePages"),
                         resultSet.getString("universite"),
                         resultSet.getString("domaine")
@@ -138,7 +139,7 @@ public class TheseUniversitaireDaoImp implements DocumentDaoInterface {
                 TheseUniversitaire theseU = new TheseUniversitaire(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getDate("datePublication").toLocalDate(),
+                        resultSet.getString("datePublication"),
                         resultSet.getInt("nombreDePages"),
                         resultSet.getString("universite"),
                         resultSet.getString("domaine")

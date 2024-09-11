@@ -73,7 +73,8 @@ public class JournalScientifiqueDaoImp implements DocumentDaoInterface {
     }
 
     @Override
-    public void displayDocument(Integer jsId) {
+    public Document displayDocument(Integer jsId) {
+        List<Document> js = new ArrayList<>();
         String sql = "SELECT * FROM journalscientifique WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -91,7 +92,7 @@ public class JournalScientifiqueDaoImp implements DocumentDaoInterface {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
+        return (Document) js;
     }
 
     @Override
@@ -106,7 +107,7 @@ public class JournalScientifiqueDaoImp implements DocumentDaoInterface {
                 JournalScientifique js = new JournalScientifique(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getDate("datePublication").toLocalDate(),
+                        resultSet.getString("datePublication"),
                         resultSet.getInt("nombreDePages"),
                         resultSet.getString("domainerechecher")
                 );
@@ -133,7 +134,7 @@ public class JournalScientifiqueDaoImp implements DocumentDaoInterface {
                 JournalScientifique js = new JournalScientifique(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getDate("datePublication").toLocalDate(),
+                        resultSet.getString("datePublication"),
                         resultSet.getInt("nombreDePages"),
                         resultSet.getString("domainerecherche")
                 );

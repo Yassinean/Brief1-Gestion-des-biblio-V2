@@ -6,11 +6,11 @@ public abstract class Document {
     private int id;
     protected String titre;
     protected String auteur;
-    protected LocalDate datePublication;
+    protected String datePublication;
     protected int nombreDePages;
 
 
-    public Document(String titre, String auteur, LocalDate datePublication, int nombreDePages) {
+    public Document(String titre, String auteur, String datePublication, int nombreDePages) {
         this.titre = titre;
         this.auteur = auteur;
         this.datePublication = datePublication;
@@ -41,11 +41,11 @@ public abstract class Document {
         this.auteur = auteur;
     }
 
-    public LocalDate getDatePublication() {
+    public String getDatePublication() {
         return datePublication;
     }
 
-    public void setDatePublication(LocalDate datePublication) {
+    public void setDatePublication(String datePublication) {
         this.datePublication = datePublication;
     }
 

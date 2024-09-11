@@ -8,7 +8,7 @@ public class Magazine extends Document {
     private int numero;
 
 
-    public Magazine(String titre, String auteur, LocalDate datePublication, int nombreDePages, int numero) {
+    public Magazine(String titre, String auteur, String datePublication, int nombreDePages, int numero) {
         super(titre, auteur, datePublication, nombreDePages);
         this.numero = numero;
     }

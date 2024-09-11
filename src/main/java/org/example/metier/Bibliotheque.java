@@ -2,85 +2,68 @@ package org.example.metier;
 
 import org.example.metier.Abstract.Document;
 import org.example.metier.Abstract.Utilisateur;
+import org.example.service.Interface.DocumentService;
 import org.example.service.Interface.UtilisateurService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Bibliotheque {
+
     private static Bibliotheque instance;
 
-    private Bibliotheque() {
+    private final UtilisateurService utilisateurService;
+    private final DocumentService documentService;
 
+    public Bibliotheque(UtilisateurService utilisateurService, DocumentService documentService /* Ajouter d'autres services ici */) {
+        this.utilisateurService = utilisateurService;
+        this.documentService = documentService;
     }
 
-    public static Bibliotheque getInstance() {
+    public static Bibliotheque getInstance(UtilisateurService utilisateurService,DocumentService documentService /* Ajouter d'autres services ici */) {
         if (instance == null) {
-            instance = new Bibliotheque();
+            instance = new Bibliotheque(utilisateurService , documentService /* Passer d'autres services ici */);
         }
         return instance;
     }
 
-    // Méthodes pour la gestion des documents
-    public void ajouterDocument(Document document) {
-        // Implémentation
+    /* ============ Méthodes pour la gestion des utilisateurs ============*/
+    public Utilisateur getUtilisateurById(Integer id) {
+        return utilisateurService.getUtilisateurById(id);
     }
 
-    public void modifierDocument(Document document) {
-        // Implémentation
+    public List<Utilisateur> getAllUtilisateurs() {
+        return utilisateurService.getAllUtilisateurs();
     }
 
-    public void supprimerDocument(int id) {
-        // Implémentation
+    public void createUtilisateur(Utilisateur utilisateur) {
+        utilisateurService.createUtilisateur(utilisateur);
     }
 
-    public Document rechercherDocument(int id) {
-        // Implémentation
-        return null;
+    public void updateUtilisateur(Integer id, Utilisateur utilisateur) {
+        utilisateurService.updateUtilisateur(id, utilisateur);
     }
 
-    // Méthodes pour la gestion des utilisateurs
-    public void ajouterUtilisateur(Utilisateur utilisateur) {
-        // Implémentation
+    public void deleteUtilisateur(Integer id) {
+        utilisateurService.deleteUtilisateur(id);
     }
+    /* ============ Fin méthodes pour la gestion des utilisateurs ============*/
 
-    public void modifierUtilisateur(Utilisateur utilisateur) {
-        // Implémentation
+    /* ============ Méthodes pour la gestion des documents ============*/
+    public Document getDocumentById(Integer id){
+        return documentService.getDocumentById(id);
     }
-
-    public void supprimerUtilisateur(int id) {
-        // Implémentation
+    public List<Document> getAllDocuments(){
+        return documentService.getAllDocuments();
     }
-
-    public Utilisateur rechercherUtilisateur(int id) {
-        // Implémentation
-        return null;
+    public void createDocument(Document document){
+        documentService.createDocument(document);
     }
-
-    // Méthodes pour la gestion des emprunts
-    public void emprunterDocument(int idDocument, int idUtilisateur) {
-        // Implémentation
+    public void updateDocument(Integer id,Document document){
+        documentService.updateDocument(id,document);
     }
-
-    public void retournerDocument(int idDocument) {
-        // Implémentation
-    }
-
-    public List<Emprunt> listeEmpruntsEnCours() {
-        // Implémentation
-        return new ArrayList<>();
-    }
-
-    // Méthodes pour la gestion des réservations
-    public void reserverDocument(int idDocument, int idUtilisateur) {
-        // Implémentation
-    }
-
-    public void annulerReservation(int idReservation) {
-        // Implémentation
-    }
-
-    public List<Reservation> listeReservationsEnCours() {
-        // Implémentation
-        return new ArrayList<>();
+    public void deleteDocument(Integer id){
+        documentService.deleteDocument(id);
     }
 }
+

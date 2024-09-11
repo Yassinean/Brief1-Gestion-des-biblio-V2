@@ -24,12 +24,12 @@ public class LivreDaoImp implements DocumentDaoInterface {
     @Override
     public void createDocument(Document document) {
         Livre livre = (Livre) document;
-        String sql = "INSERT INTO livre (titre, auteur, datePublication, nombreDePages, isbn) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO livre (titre, auteur, datePublication, nombredepage, isbn) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, livre.getTitre());
             statement.setString(2, livre.getAuteur());
-            statement.setDate(3, Date.valueOf(livre.getDatePublication()));
+            statement.setString(3, livre.getDatePublication());
             statement.setInt(4, livre.getNombreDePages());
             statement.setString(5, livre.getIsbn());
 
@@ -43,7 +43,7 @@ public class LivreDaoImp implements DocumentDaoInterface {
     @Override
     public void updateDocument(Document document) {
         Livre livre = (Livre) document;
-        String sql = "UPDATE livre SET titre = ?, auteur = ?, datePublication = ?, nombreDePages = ?, isbn = ? WHERE id = ?";
+        String sql = "UPDATE livre SET titre = ?, auteur = ?, datePublication = ?, nombredepages = ?, isbn = ? WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, livre.getTitre());
@@ -74,7 +74,8 @@ public class LivreDaoImp implements DocumentDaoInterface {
     }
 
     @Override
-    public void displayDocument(Integer livreId) {
+    public Document displayDocument(Integer livreId) {
+        List<Document> livres = new ArrayList<>();
         String sql = "SELECT * FROM livre WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -85,14 +86,14 @@ public class LivreDaoImp implements DocumentDaoInterface {
                 System.out.println("ID: " + resultSet.getInt("id"));
                 System.out.println("Titre: " + resultSet.getString("titre"));
                 System.out.println("Auteur: " + resultSet.getString("auteur"));
-                System.out.println("Date de publication: " + resultSet.getDate("datePublication").toLocalDate());
+                System.out.println("Date de publication: " + resultSet.getString("datePublication"));
                 System.out.println("Nombre de pages: " + resultSet.getInt("nombreDePages"));
                 System.out.println("ISBN: " + resultSet.getString("isbn"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
+        return (Document) livres;
     }
 
     @Override
@@ -105,10 +106,9 @@ public class LivreDaoImp implements DocumentDaoInterface {
 
             while (resultSet.next()) {
                 Livre livre = new Livre(
-                        resultSet.getInt("id"),
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getDate("datePublication").toLocalDate(),
+                        resultSet.getString("datePublication"),
                         resultSet.getInt("nombreDePages"),
                         resultSet.getString("isbn")
                 );
@@ -133,10 +133,9 @@ public class LivreDaoImp implements DocumentDaoInterface {
 
             while (resultSet.next()) {
                 Livre livre = new Livre(
-                        resultSet.getInt("id"),
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getDate("datePublication").toLocalDate(),
+                        resultSet.getString("datePublication"),
                         resultSet.getInt("nombreDePages"),
                         resultSet.getString("isbn")
                 );

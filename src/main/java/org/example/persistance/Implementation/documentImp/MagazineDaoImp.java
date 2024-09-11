@@ -74,7 +74,8 @@ public class MagazineDaoImp implements DocumentDaoInterface {
     }
 
     @Override
-    public void displayDocument(Integer magazineId) {
+    public Document displayDocument(Integer magazineId) {
+        List<Document> magazines = new ArrayList<>();
         String sql = "SELECT * FROM magazinw WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -85,14 +86,14 @@ public class MagazineDaoImp implements DocumentDaoInterface {
                 System.out.println("ID: " + resultSet.getInt("id"));
                 System.out.println("Titre: " + resultSet.getString("titre"));
                 System.out.println("Auteur: " + resultSet.getString("auteur"));
-                System.out.println("Date de publication: " + resultSet.getDate("datePublication").toLocalDate());
+                System.out.println("Date de publication: " + resultSet.getString("datePublication"));
                 System.out.println("Nombre de pages: " + resultSet.getInt("nombreDePages"));
                 System.out.println("ISBN: " + resultSet.getInt("numero"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
+        return (Document) magazines;
     }
 
     @Override
@@ -107,7 +108,7 @@ public class MagazineDaoImp implements DocumentDaoInterface {
                 Magazine magazine = new Magazine(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getDate("datePublication").toLocalDate(),
+                        resultSet.getString("datePublication"),
                         resultSet.getInt("nombreDePages"),
                         resultSet.getInt("numero")
                 );
@@ -134,7 +135,7 @@ public class MagazineDaoImp implements DocumentDaoInterface {
                 Magazine magazine = new Magazine(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getDate("datePublication").toLocalDate(),
+                        resultSet.getString("datePublication"),
                         resultSet.getInt("nombreDePages"),
                         resultSet.getInt("numero")
                 );

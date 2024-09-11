@@ -11,11 +11,9 @@ public class Livre extends Document implements Empruntable, Reservable {
     private boolean estEmprunte;
     private boolean estReserve;
 
-    public Livre(Integer id, String titre, String auteur, LocalDate datePublication, int nombreDePages , String isbn) {
+    public Livre(String titre, String auteur, String datePublication, int nombreDePages , String isbn) {
         super(titre, auteur, datePublication, nombreDePages);
         this.isbn = isbn;
-        this.estEmprunte = false;
-        this.estReserve = false;
     }
 
     public String getIsbn() {
