@@ -29,7 +29,7 @@ public class LivreDaoImp implements DocumentDaoInterface {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, livre.getTitre());
             statement.setString(2, livre.getAuteur());
-            statement.setDate(3, Date.valueOf(livre.getDate()));
+            statement.setDate(3, Date.valueOf(livre.getDatePublication()));
             statement.setInt(4, livre.getNombreDePages());
             statement.setString(5, livre.getIsbn());
 
@@ -48,7 +48,7 @@ public class LivreDaoImp implements DocumentDaoInterface {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, livre.getTitre());
             statement.setString(2, livre.getAuteur());
-            statement.setDate(3, Date.valueOf(livre.getDate()));
+            statement.setDate(3, Date.valueOf(livre.getDatePublication()));
             statement.setInt(4, livre.getNombreDePages());
             statement.setString(5, livre.getIsbn());
             statement.setInt(6, livre.getId());
@@ -110,6 +110,8 @@ public class LivreDaoImp implements DocumentDaoInterface {
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePages"),
+                        resultSet.getBoolean("isEmprunted"),
+                        resultSet.getBoolean("isReserved"),
                         resultSet.getString("isbn")
                 );
                 livres.add(livre);
@@ -138,6 +140,8 @@ public class LivreDaoImp implements DocumentDaoInterface {
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePages"),
+                        resultSet.getBoolean("isEmprunted"),
+                        resultSet.getBoolean("isReserved"),
                         resultSet.getString("isbn")
                 );
                 livres.add(livre);

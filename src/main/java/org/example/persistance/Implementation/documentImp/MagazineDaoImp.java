@@ -29,7 +29,7 @@ public class MagazineDaoImp implements DocumentDaoInterface {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, magazine.getTitre());
             statement.setString(2, magazine.getAuteur());
-            statement.setDate(3, Date.valueOf(magazine.getDate()));
+            statement.setDate(3, Date.valueOf(magazine.getDatePublication()));
             statement.setInt(4, magazine.getNombreDePages());
             statement.setInt(5, magazine.getNumero());
 
@@ -48,7 +48,7 @@ public class MagazineDaoImp implements DocumentDaoInterface {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, magazine.getTitre());
             statement.setString(2, magazine.getAuteur());
-            statement.setDate(3, Date.valueOf(magazine.getDate()));
+            statement.setDate(3, Date.valueOf(magazine.getDatePublication()));
             statement.setInt(4, magazine.getNombreDePages());
             statement.setInt(5, magazine.getNumero());
             statement.setInt(6, magazine.getId());
@@ -109,6 +109,8 @@ public class MagazineDaoImp implements DocumentDaoInterface {
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePages"),
+                        resultSet.getBoolean("isEmprunted"),
+                        resultSet.getBoolean("isReserved"),
                         resultSet.getInt("numero")
                 );
                 magazines.add(magazine);
@@ -136,6 +138,8 @@ public class MagazineDaoImp implements DocumentDaoInterface {
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePages"),
+                        resultSet.getBoolean("isEmprunted"),
+                        resultSet.getBoolean("isReserved"),
                         resultSet.getInt("numero")
                 );
                 magazines.add(magazine);
