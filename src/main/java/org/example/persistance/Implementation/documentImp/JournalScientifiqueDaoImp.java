@@ -24,7 +24,7 @@ public class JournalScientifiqueDaoImp implements DocumentDaoInterface {
     @Override
     public void createDocument(Document document) {
         JournalScientifique js = (JournalScientifique) document;
-        String sql = "INSERT INTO journalscientifique (titre, auteur, datePublication, nombreDePages, numero) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO journalscientifique (titre, auteur, datePublication, nombreDePages, domainerecherche) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, js.getTitre());
@@ -43,7 +43,7 @@ public class JournalScientifiqueDaoImp implements DocumentDaoInterface {
     @Override
     public void updateDocument(Document document) {
         JournalScientifique js = (JournalScientifique) document;
-        String sql = "UPDATE journalscientifique SET titre = ?, auteur = ?, datePublication = ?, nombreDePages = ?, domaine = ? WHERE id = ?";
+        String sql = "UPDATE journalscientifique SET titre = ?, auteur = ?, datePublication = ?, nombreDePages = ?, domainerecherche = ? WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, js.getTitre());
@@ -86,7 +86,7 @@ public class JournalScientifiqueDaoImp implements DocumentDaoInterface {
                 System.out.println("Auteur: " + resultSet.getString("auteur"));
                 System.out.println("Date de publication: " + resultSet.getDate("datePublication").toLocalDate());
                 System.out.println("Nombre de pages: " + resultSet.getInt("nombreDePages"));
-                System.out.println("Domaine: " + resultSet.getString("domaine"));
+                System.out.println("Domaine: " + resultSet.getString("domainerecherche"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -97,7 +97,7 @@ public class JournalScientifiqueDaoImp implements DocumentDaoInterface {
     @Override
     public List<Document> displayAllDocuments() {
         List<Document> journals = new ArrayList<>();
-        String sql = "SELECT * FROM magazine";
+        String sql = "SELECT * FROM journalscientifique";
 
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
@@ -108,7 +108,7 @@ public class JournalScientifiqueDaoImp implements DocumentDaoInterface {
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePages"),
-                        resultSet.getString("domaine"),
+                        resultSet.getString("domainerechecher"),
                         resultSet.getBoolean("isEmprunted"),
                         resultSet.getBoolean("isReserved")
                 );
@@ -124,7 +124,7 @@ public class JournalScientifiqueDaoImp implements DocumentDaoInterface {
     @Override
     public List<Document> searchDocument(String titre) {
         List<Document> journals = new ArrayList<>();
-        String sql = "SELECT * FROM magazine WHERE titre LIKE ?";
+        String sql = "SELECT * FROM journalscientifique WHERE titre LIKE ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             String searchPattern = "%" + titre + "%";
@@ -137,7 +137,9 @@ public class JournalScientifiqueDaoImp implements DocumentDaoInterface {
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePages"),
-                        resultSet.getInt("domainerecherche"),
+                        resultSet.getString("domainerecherche"),
+                        resultSet.getBoolean("isEmprunted"),
+                        resultSet.getBoolean("isReserved")
                 );
                 journals.add(js);
             }

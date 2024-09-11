@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class JournalScientifique extends Document{
     private String domaineRecherche;
-    public JournalScientifique(String titre, String auteur, LocalDate datePublication, int nombreDePages , boolean isEmprunted , boolean isReserved, String domaineRecherche) {
+    public JournalScientifique(String titre, String auteur, LocalDate datePublication, int nombreDePages ,  String domaineRecherche, boolean isEmprunted , boolean isReserved) {
         super(titre, auteur, datePublication, nombreDePages, isEmprunted, isReserved);
         this.domaineRecherche = domaineRecherche;
     }
