@@ -6,10 +6,10 @@ import java.sql.SQLException;
 
 public class DbConfig {
     private static volatile DbConfig instance;
-    private Connection connection;
-    private String url = "jdbc:postgresql://localhost:5432/library";
-    private String username = "postgres";
-    private String password = "hanach";
+    private final Connection connection;
+    private final String url = "jdbc:postgresql://localhost:5432/library";
+    private final String username = "postgres";
+    private final String password = "hanach";
 
     private DbConfig() throws SQLException {
         try {
