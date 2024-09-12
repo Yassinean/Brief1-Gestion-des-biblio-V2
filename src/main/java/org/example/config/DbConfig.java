@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DbConfig {
-    private static DbConfig instance;
+    private static volatile DbConfig instance;
     private Connection connection;
     private String url = "jdbc:postgresql://localhost:5432/library";
     private String username = "postgres";
@@ -25,7 +25,11 @@ public class DbConfig {
 
     public static DbConfig getInstance() throws SQLException {
         if (instance == null) {
-            instance = new DbConfig();
+            synchronized (DbConfig.class) {
+                if (instance == null) {
+                    instance = new DbConfig();
+                }
+            }
         } else if (instance.getConnection().isClosed()) {
             instance = new DbConfig();
         }
