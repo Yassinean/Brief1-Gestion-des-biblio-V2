@@ -14,24 +14,17 @@ public class ConsoleUI {
     private static ConsoleUI instance;
     private Scanner scanner;
     private Bibliotheque bibliotheque;
-    private LivreService livreService;
-    private MagazineService magazineService;
-    private JournalScientifiqueService journalScientifiqueService;
-    private TheseUniversitaireService theseUniversitaireService;
 
 
-    private ConsoleUI(Bibliotheque bibliotheque , LivreService livreService , MagazineService magazineService , JournalScientifiqueService journalScientifiqueService , TheseUniversitaireService theseUniversitaireService) {
+
+    private ConsoleUI(Bibliotheque bibliotheque) {
         scanner = new Scanner(System.in);
         this.bibliotheque = bibliotheque;
-        this.livreService = livreService;
-        this.magazineService = magazineService;
-        this.journalScientifiqueService = journalScientifiqueService;
-        this.theseUniversitaireService = theseUniversitaireService;
     }
 
     public static ConsoleUI getInstance(Bibliotheque bibliotheque , LivreService livreService , MagazineService magazineService , JournalScientifiqueService journalScientifiqueService , TheseUniversitaireService theseUniversitaireService) {
         if (instance == null) {
-            instance = new ConsoleUI(bibliotheque, livreService ,  magazineService , journalScientifiqueService , theseUniversitaireService);
+            instance = new ConsoleUI(bibliotheque);
         }
         return instance;
     }
@@ -241,7 +234,7 @@ public class ConsoleUI {
     private void modifierLivre() {
         System.out.println("=== MODIFIER UN LIVRE ===");
         int id = getIntInput("Entrez l'ID du livre à modifier: ");
-        Livre livre = livreService.getLivreById(id);
+        Livre livre = bibliotheque.getLivreById(id);
         if (livre != null) {
             System.out.println("1. Modifier le titre");
             System.out.println("2. Modifier l'auteur");
@@ -275,7 +268,7 @@ public class ConsoleUI {
                     System.out.println("Option invalide.");
                     return;
             }
-            livreService.updateLivre(id, livre);
+            bibliotheque.updateLivre(id, livre);
             System.out.println("Livre : " + livre.getTitre() + " modifié avec succès.");
         } else {
             System.out.println("Livre introuvable.");
@@ -285,7 +278,7 @@ public class ConsoleUI {
     private void modifierMagazine() {
         System.out.println("=== MODIFIER UN MAGAZINE ===");
         int id = getIntInput("Entrez l'ID du magazine à modifier: ");
-        Magazine magazine = magazineService.getMagazineById(id);
+        Magazine magazine = bibliotheque.getMagazineById(id);
         if (magazine != null) {
             System.out.println("1. Modifier le titre");
             System.out.println("2. Modifier l'auteur");
@@ -319,7 +312,7 @@ public class ConsoleUI {
                     System.out.println("Option invalide.");
                     return;
             }
-            magazineService.updateMagazine(id, magazine);
+            bibliotheque.updateMagazine(id, magazine);
             System.out.println("Magazine : " + magazine.getTitre() + " modifié avec succès.");
         } else {
             System.out.println("Magazine introuvable.");
@@ -329,7 +322,7 @@ public class ConsoleUI {
     private void modifierJournalScientifique() {
         System.out.println("=== MODIFIER UN JOURNAL SCIENTIFIQUE ===");
         int id = getIntInput("Entrez l'ID  du journal à modifier: ");
-        JournalScientifique journal = journalScientifiqueService.getJournalScientifiqueById(id);
+        JournalScientifique journal = bibliotheque.getJournalScientifiqueById(id);
         if (journal != null) {
             System.out.println("1. Modifier le titre");
             System.out.println("2. Modifier l'auteur");
@@ -362,7 +355,7 @@ public class ConsoleUI {
                 default:
                     System.out.println("Option invalide.");
             }
-            journalScientifiqueService.updateJournalScientifique(id, journal);
+            bibliotheque.updateJournalScientifique(id, journal);
             System.out.println("Jounal : " + journal.getTitre() + " modifié avec succès.");
         } else {
             System.out.println("Journal introuvable.");
@@ -372,7 +365,7 @@ public class ConsoleUI {
     private void modifierTheseUniversitaire() {
         System.out.println("=== MODIFIER UN THESE UNIVERSITAIRE ===");
         int id = getIntInput("Entrez l'ID  du these à modifier: ");
-        TheseUniversitaire these = theseUniversitaireService.getTheseUniversitaireById(id);
+        TheseUniversitaire these = bibliotheque.getTheseUniversitaireById(id);
         if (these != null) {
             System.out.println("1. Modifier le titre");
             System.out.println("2. Modifier l'auteur");
@@ -410,7 +403,7 @@ public class ConsoleUI {
                 default:
                     System.out.println("Option invalide.");
             }
-            theseUniversitaireService.updateTheseUniversitaire(id, these);
+            bibliotheque.updateTheseUniversitaire(id, these);
             System.out.println("These : " + these.getTitre() + " modifié avec succès.");
         } else {
             System.out.println("Theses introuvable.");
@@ -474,11 +467,12 @@ public class ConsoleUI {
 
     /* ============ Fin suppression des documents ============*/
 
-    /* ============ Suppression des documents ============*/
+    /* ============ Recherche des documents ============*/
     private void rechercherDocument() {
         System.out.println("=== RECHERCHER UN DOCUMENT ===");
         // Implement search logic
     }
+    /* ============ Recherche des documents ============*/
 
     private void emprunterDocument() {
         System.out.println("=== EMPRUNTER UN DOCUMENT ===");
