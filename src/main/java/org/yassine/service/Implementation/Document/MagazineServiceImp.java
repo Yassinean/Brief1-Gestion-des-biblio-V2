@@ -20,6 +20,11 @@ public class MagazineServiceImp implements MagazineService {
     }
 
     @Override
+    public List <Magazine> getMagazineByTitre(String titre) {
+        return (List<Magazine>) magazineDao.searchMagazine(titre);
+    }
+
+    @Override
     public List<Magazine> getAllMagazines() {
         return magazineDao.displayAllMagazines();
     }

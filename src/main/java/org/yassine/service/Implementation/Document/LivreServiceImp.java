@@ -19,6 +19,11 @@ public class LivreServiceImp implements LivreService {
     }
 
     @Override
+    public List<Livre> getLivreByTitre(String titre) {
+        return livreDao.searchLivre(titre); // No need for casting
+    }
+
+    @Override
     public List<Livre> getAllLivres() {
         return livreDao.displayAllLivres();
     }

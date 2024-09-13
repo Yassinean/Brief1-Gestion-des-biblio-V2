@@ -19,6 +19,6 @@ public class JournalScientifique extends Document {
 
     @Override
     public String afficherDetails() {
-        return "";
+        return String.format("Livre: %s, Auteur: %s, ISBN: %s, Pages: %d",getTitre(),getAuteur(),domaineRecherche, nombreDePages);
     }
 }

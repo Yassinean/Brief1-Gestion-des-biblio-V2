@@ -1,5 +1,6 @@
 package org.yassine.persistance.Interface.Document;
 
+import org.yassine.metier.Livre;
 import org.yassine.metier.Magazine;
 
 import java.util.List;
@@ -19,3 +20,6 @@ public interface MagazineDaoInterface {
     List<Magazine> searchMagazine(String titre);
 
 }
+
+
+

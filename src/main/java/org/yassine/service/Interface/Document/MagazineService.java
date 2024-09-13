@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface MagazineService {
     Magazine getMagazineById(Integer id);
+    List<Magazine> getMagazineByTitre(String titre);
     List<Magazine> getAllMagazines();
     void createMagazine(Magazine document);
     void updateMagazine(Integer id , Magazine document);

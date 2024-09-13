@@ -7,6 +7,7 @@ import org.yassine.service.Interface.Document.MagazineService;
 import org.yassine.service.Interface.Document.TheseUniversitaireService;
 
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleUI {
@@ -470,9 +471,97 @@ public class ConsoleUI {
     /* ============ Recherche des documents ============*/
     private void rechercherDocument() {
         System.out.println("=== RECHERCHER UN DOCUMENT ===");
-        // Implement search logic
+        System.out.println("Sélectionnez le type de document à rechercher :");
+        System.out.println("1. Livre");
+        System.out.println("2. Magazine");
+        System.out.println("3. Journal Scientifique");
+        System.out.println("4. Thèse Universitaire");
+        System.out.println("5. Retour au menu principal");
+
+        int choix = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (choix) {
+            case 1:
+                rechercherLivre();
+                break;
+            case 2:
+                rechercherMagazine();
+                break;
+            case 3:
+                rechercherJournalScientifique();
+                break;
+            case 4:
+                rechercherTheseUniversitaire();
+                break;
+            case 5:
+                System.out.println("Retour au menu principal.");
+                return;
+            default:
+                System.out.println("Choix invalide, veuillez réessayer.");
+                rechercherDocument();
+                break;
+        }
     }
-    /* ============ Recherche des documents ============*/
+
+    private void rechercherLivre() {
+        System.out.println("Entrez le titre du livre à rechercher :");
+        String titre = scanner.nextLine();
+        List<Livre> resultats = (List<Livre>) bibliotheque.getLivreByTitre(titre);
+        if (resultats.isEmpty()) {
+            System.out.println("Aucun livre trouvé pour le titre : " + titre);
+        } else {
+            System.out.println("Livres trouvés :");
+            for (Livre livre : resultats) {
+                System.out.println(livre.afficherDetails());
+            }
+        }
+    }
+
+    private void rechercherMagazine() {
+        System.out.println("Entrez le titre du magazine à rechercher :");
+        String titre = scanner.nextLine();
+        List<Magazine> resultats = (List<Magazine>) bibliotheque.getMagazineByTitre(titre);
+        if (resultats.isEmpty()) {
+            System.out.println("Aucun magazine trouvé pour le titre : " + titre);
+        } else {
+            System.out.println("Magazines trouvés :");
+            for (Magazine magazine : resultats) {
+                System.out.println(magazine.afficherDetails());
+            }
+        }
+    }
+
+    private void rechercherJournalScientifique() {
+        System.out.println("Entrez le titre du journal scientifique à rechercher :");
+        String titre = scanner.nextLine();
+
+        List<JournalScientifique> resultats = (List<JournalScientifique>) bibliotheque.getJournalScientifiqueByTitre(titre);
+        if (resultats.isEmpty()) {
+            System.out.println("Aucun journal scientifique trouvé pour le titre : " + titre);
+        } else {
+            System.out.println("Journaux scientifiques trouvés :");
+            for (JournalScientifique journal : resultats) {
+                System.out.println(journal.afficherDetails());
+            }
+        }
+    }
+
+    private void rechercherTheseUniversitaire() {
+        System.out.println("Entrez le titre de la thèse universitaire à rechercher :");
+        String titre = scanner.nextLine();
+
+        List<TheseUniversitaire> resultats = (List<TheseUniversitaire>) bibliotheque.getTheseUniversitaireByTitre(titre);
+        if (resultats.isEmpty()) {
+            System.out.println("Aucune thèse universitaire trouvée pour le titre : " + titre);
+        } else {
+            System.out.println("Thèses universitaires trouvées :");
+            for (TheseUniversitaire these : resultats) {
+                System.out.println(these.afficherDetails());
+            }
+        }
+    }
+    /* ============ Fin recherche des documents ============*/
 
     private void emprunterDocument() {
         System.out.println("=== EMPRUNTER UN DOCUMENT ===");

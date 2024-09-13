@@ -20,6 +20,11 @@ public class JournalScientifiqueServiceImp implements JournalScientifiqueService
     }
 
     @Override
+    public List<JournalScientifique> getJournalScientifiqueByTitre(String titre) {
+        return journalScientifiqueDao.searchJournalScientifique(titre);
+    }
+
+    @Override
     public List<JournalScientifique> getAllJournalScientifiques() {
         return journalScientifiqueDao.displayAllJournalScientifiques();
     }
