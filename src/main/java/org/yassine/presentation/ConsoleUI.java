@@ -1,10 +1,16 @@
 package org.yassine.presentation;
 
 import org.yassine.metier.*;
+import org.yassine.service.Implementation.Document.JournalScientifiqueServiceImp;
+import org.yassine.service.Implementation.Document.LivreServiceImp;
+import org.yassine.service.Implementation.Document.MagazineServiceImp;
+import org.yassine.service.Implementation.Document.TheseUniversitaireServiceImp;
 import org.yassine.service.Interface.Document.JournalScientifiqueService;
 import org.yassine.service.Interface.Document.LivreService;
 import org.yassine.service.Interface.Document.MagazineService;
 import org.yassine.service.Interface.Document.TheseUniversitaireService;
+import org.yassine.service.Interface.Utilisateur.EtudiantService;
+import org.yassine.service.Interface.Utilisateur.ProfesseurService;
 
 
 import java.util.List;
@@ -17,13 +23,12 @@ public class ConsoleUI {
     private Bibliotheque bibliotheque;
 
 
-
     private ConsoleUI(Bibliotheque bibliotheque) {
         scanner = new Scanner(System.in);
         this.bibliotheque = bibliotheque;
     }
 
-    public static ConsoleUI getInstance(Bibliotheque bibliotheque , LivreService livreService , MagazineService magazineService , JournalScientifiqueService journalScientifiqueService , TheseUniversitaireService theseUniversitaireService) {
+    public static ConsoleUI getInstance(Bibliotheque bibliotheque, LivreService livreService, MagazineService magazineService, JournalScientifiqueService journalScientifiqueService, TheseUniversitaireService theseUniversitaireService, ProfesseurService professeurService, EtudiantService etudiantService) {
         if (instance == null) {
             instance = new ConsoleUI(bibliotheque);
         }
@@ -40,7 +45,7 @@ public class ConsoleUI {
                     gestionDocuments();
                     break;
                 case 2:
-//                    gestionUtilisateurs();
+                    gestionUtilisateurs();
                     break;
                 case 3:
 //                    gestionEmprunts();
@@ -66,6 +71,7 @@ public class ConsoleUI {
         System.out.println("0. Quitter");
     }
 
+    /* ====================== Gestion des documents ======================*/
     private void gestionDocuments() {
         System.out.println("\n=== GESTION DES DOCUMENTS ===");
         System.out.println("1. Ajouter un document");
@@ -572,8 +578,180 @@ public class ConsoleUI {
         System.out.println("=== RESERVER UN DOCUMENT ===");
         // Implement search logic
     }
+    /* ====================== Fin gestion des documents ======================*/
+
+    /* ====================== Gestion des utilisateur ======================*/
+    private void gestionUtilisateurs() {
+        System.out.println("\n=== GESTION DES Utilisateur ===");
+        System.out.println("1. Ajouter un utilisateur");
+        System.out.println("2. Modifier un utilisateur");
+        System.out.println("3. Supprimer un utilisateur");
+        System.out.println("4. Rechercher un utilisateur");
+        System.out.println("0. Retour au menu principal");
+
+        int choice = getIntInput("Choisissez une option: ");
+        switch (choice) {
+            case 1:
+                ajouterUtilisateur();
+                break;
+            case 2:
+//                modifierUtilisateur();
+                break;
+            case 3:
+//                supprimerUtilisateur();
+                break;
+            case 4:
+//                rechercherUtilisateur();
+                break;
+            case 0:
+                // Retour au menu principal
+                break;
+            default:
+                System.out.println("Option invalide. Veuillez réessayer.");
+        }
+    }
+
+    /* ============ Creation des documents ============*/
+    private void ajouterUtilisateur() {
+        System.out.println("\n=== AJOUTER UN UTILISATEUR ===");
+        System.out.println("1. Professeur");
+        System.out.println("2. Etudiant");
+
+        int typeChoix = getIntInput("Choisissez le type de document: ");
+
+        switch (typeChoix) {
+            case 1:
+                creerProfesseur();
+                break;
+            case 2:
+                creerEtudiant();
+                break;
+            default:
+                System.out.println("Type d'utilisateur invalide.");
+                return;
+        }
+    }
+
+    private void creerProfesseur() {
+        System.out.println("=== AJOUTER UN PROFESSEUR ===");
+        String name = getStringInput("Entrez le nom du professeur: ");
+        scanner.nextLine();
+        String email = getStringInput("Entrez l'email du professeur: ");
+        scanner.nextLine();
+        String matiere = getStringInput("Entrez la matiere du professeur: ");
+        scanner.nextLine();
+        Professeur prof = new Professeur(name,email,matiere);
+        bibliotheque.createProfesseur(prof);
+        System.out.println("Professeur : Mr. " + name + " est ajoute avec succes");
+    }
+
+    private void creerEtudiant() {
+        System.out.println("=== AJOUTER UN ETUDIANT ===");
+        String name = getStringInput("Entrez le nom de l'etudiant : ");
+        scanner.nextLine();
+        String email = getStringInput("Entrez l'email de l'etudiant : ");
+        scanner.nextLine();
+        String branche = getStringInput("Entrez la branche de l'etudiant : ");
+        scanner.nextLine();
+        Etudiant etudiant = new Etudiant(name,email,branche);
+        bibliotheque.createEtudiant(etudiant);
+        System.out.println("Etudiant : Mr. " + name + " est ajoute avec succes");
+    }
+
+    /* ============ Fin creation des utilisateur ============*/
+    /* ============ Modification des utilisateur ============*/
+    private void modifierUtilisateur() {
+        System.out.println("\n=== MODIFIER UN UTILISATEUR ===");
+        System.out.println("1. Professeur");
+        System.out.println("2. Etudiant");
+
+        int typeChoix = getIntInput("Choisissez le type de document: ");
+
+        switch (typeChoix) {
+            case 1:
+                modifierProfesseur();
+                break;
+            case 2:
+                modifierEtudiant();
+                break;
+            default:
+                System.out.println("Type d'utilisateur invalide.");
+                return;
+        }
+    }
+
+    private void modifierEtudiant() {
+        System.out.println("=== MODIFIER UN ETUDIANT ===");
+        int id = getIntInput("Entrez l'ID de l'etudiant à modifier: ");
+        Etudiant etudiant = bibliotheque.getEtudiantById(id);
+        if (etudiant != null) {
+            System.out.println("1. Modifier le nom");
+            System.out.println("2. Modifier l'email");
+            System.out.println("3. Modifier la branche");
+
+            int choix = getIntInput("Choisissez l'attribut à modifier: ");
+            switch (choix) {
+                case 1:
+                    String nouveauName = getStringInput("Entrez le nouveau nom: ");
+                    etudiant.setName(nouveauName);
+                    break;
+                case 2:
+                    String nouvelEmail = getStringInput("Entrez le nouvel email: ");
+                    etudiant.setEmail(nouvelEmail);
+                    break;
+                case 3:
+                    String nouvelleBranche = getStringInput("Entrez la nouvelle branche: ");
+                    etudiant.setBranche(nouvelleBranche);
+                    break;
+                default:
+                    System.out.println("Option invalide.");
+                    return;
+            }
+            bibliotheque.updateEtudiant(id, etudiant);
+            System.out.println("Etudiant : Mr. " + etudiant.getName() + " modifié avec succès.");
+        } else {
+            System.out.println("Etudiant introuvable.");
+        }
+    }
+
+    private void modifierProfesseur() {
+        System.out.println("=== MODIFIER UN PROFESSEUR ===");
+        int id = getIntInput("Entrez l'ID du professeur à modifier: ");
+        Professeur professeur = bibliotheque.getProfesseurById(id);
+        if (professeur != null) {
+            System.out.println("1. Modifier le nom");
+            System.out.println("2. Modifier l'email");
+            System.out.println("3. Modifier la matiere");
+
+            int choix = getIntInput("Choisissez l'attribut à modifier: ");
+            switch (choix) {
+                case 1:
+                    String nouveauName = getStringInput("Entrez le nouveau nom: ");
+                    professeur.setName(nouveauName);
+                    break;
+                case 2:
+                    String nouvelEmail = getStringInput("Entrez le nouvel email: ");
+                    professeur.setEmail(nouvelEmail);
+                    break;
+                case 3:
+                    String nouvelleMatiere = getStringInput("Entrez la nouvelle matiere: ");
+                    professeur.setMatiere(nouvelleMatiere);
+                    break;
+                default:
+                    System.out.println("Option invalide.");
+                    return;
+            }
+            bibliotheque.updateProfesseur(id, professeur);
+            System.out.println("Professeur : Mr. " + professeur.getName() + " modifié avec succès.");
+        } else {
+            System.out.println("Professeur introuvable.");
+        }
+    }
+
+    /* ============ Fin creation des documents ============*/
 
 
+    /* ====================== Fin gestion des utilisateur ======================*/
     private int getIntInput(String prompt) {
         System.out.print(prompt);
         while (!scanner.hasNextInt()) {

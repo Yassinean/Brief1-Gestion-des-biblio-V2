@@ -3,10 +3,11 @@ package org.yassine.service.Implementation.Utilisateur;
 
 import org.yassine.metier.Professeur;
 import org.yassine.persistance.Interface.Utilisateur.ProfesseurDaoInterface;
+import org.yassine.service.Interface.Utilisateur.ProfesseurService;
 
 import java.util.List;
 
-public class ProfesseurServiceImp implements ProfesseurDaoInterface {
+public class ProfesseurServiceImp implements ProfesseurService {
 
     private ProfesseurDaoInterface professeurDao;
 
@@ -49,9 +50,6 @@ public class ProfesseurServiceImp implements ProfesseurDaoInterface {
         if (professeurUpdate == null) {
             System.out.println("Professeur avec ID " + id + " non trouve !");
         }
-
-        professeurUpdate.setName(professeur.getName());
-        professeurUpdate.setEmail(professeur.getEmail());
 
         professeurDao.updateProfesseur(id, professeurUpdate);
     }

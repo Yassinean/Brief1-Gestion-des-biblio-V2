@@ -35,9 +35,10 @@ public class ProfesseurDaoImp implements ProfesseurDaoInterface {
 //        Professeur professeur = (Professeur) professeur;
         try (Connection connection = DbConfig.getInstance().getConnection();
              PreparedStatement stmt = connection.prepareStatement(
-                     "INSERT INTO professeur (name, email) VALUES ( ?, ?)")) {
+                     "INSERT INTO professeur (name, email , matiere) VALUES ( ?, ?, ?)")) {
             stmt.setString(1, professeur.getName());
             stmt.setString(2, professeur.getEmail());
+            stmt.setString(3, professeur.getMatiere());
             stmt.executeUpdate();
             System.out.println("Le professeur a été ajouté avec succès");
         } catch (SQLException e) {

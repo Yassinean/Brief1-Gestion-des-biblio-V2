@@ -1,6 +1,7 @@
 package org.yassine.metier;
 
 
+
 import org.yassine.service.Interface.Document.JournalScientifiqueService;
 import org.yassine.service.Interface.Document.LivreService;
 import org.yassine.service.Interface.Document.MagazineService;
@@ -22,21 +23,22 @@ public class Bibliotheque {
     private final TheseUniversitaireService theseService;
 
 
-    public Bibliotheque(ProfesseurService professeurService, EtudiantService etudiantService, LivreService livreService, MagazineService magazineService, JournalScientifiqueService journalService, TheseUniversitaireService theseService) {
-        this.professeurService = professeurService;
-        this.etudiantService = etudiantService;
+    public Bibliotheque(LivreService livreService, MagazineService magazineService, JournalScientifiqueService journalService, TheseUniversitaireService theseService ,ProfesseurService professeurService, EtudiantService etudiantService) {
         this.livreService = livreService;
         this.magazineService = magazineService;
         this.journalService = journalService;
         this.theseService = theseService;
+        this.professeurService = professeurService;
+        this.etudiantService = etudiantService;
     }
 
-    public static Bibliotheque getInstance(ProfesseurService professeurService, EtudiantService etudiantService, LivreService livreService, MagazineService magazineService, JournalScientifiqueService journalService, TheseUniversitaireService theseService) {
+    public static Bibliotheque getInstance(LivreService livreService, MagazineService magazineService, JournalScientifiqueService journalService, TheseUniversitaireService theseService ,ProfesseurService professeurService, EtudiantService etudiantService) {
         if (instance == null) {
-            instance = new Bibliotheque(professeurService, etudiantService, livreService, magazineService, journalService, theseService);
+            instance = new Bibliotheque(livreService, magazineService, journalService, theseService,professeurService, etudiantService);
         }
         return instance;
     }
+
 
     /* ============ Méthodes pour la gestion des professeurs ============*/
     public Professeur getProfesseurById(Integer id) {
