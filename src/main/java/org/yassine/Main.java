@@ -16,7 +16,7 @@ import org.yassine.service.Implementation.Document.LivreServiceImp;
 import org.yassine.service.Implementation.Document.MagazineServiceImp;
 import org.yassine.service.Implementation.Document.JournalScientifiqueServiceImp;
 import org.yassine.service.Implementation.Document.TheseUniversitaireServiceImp;
-import org.yassine.service.Implementation.UtilisateurServiceImp;
+import org.yassine.service.Implementation.Utilisateur.EtudiantServiceImp;
 
 import java.sql.SQLException;
 
@@ -30,7 +30,7 @@ public class Main {
         TheseUniversitaireDaoInterface theseUniversitaireDao = new TheseUniversitaireDaoImp();
 
         // Initialize services with DAO implementations
-        UtilisateurServiceImp utilisateurService = new UtilisateurServiceImp(utilisateurDao);
+        EtudiantServiceImp utilisateurService = new EtudiantServiceImp(utilisateurDao);
 
         LivreServiceImp livreService = new LivreServiceImp(livreDao);
         MagazineServiceImp magazineService = new MagazineServiceImp(magazineDao);

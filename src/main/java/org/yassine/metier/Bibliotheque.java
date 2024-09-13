@@ -1,11 +1,12 @@
 package org.yassine.metier;
 
-import org.yassine.metier.Abstract.Utilisateur;
+
 import org.yassine.service.Interface.Document.JournalScientifiqueService;
 import org.yassine.service.Interface.Document.LivreService;
 import org.yassine.service.Interface.Document.MagazineService;
 import org.yassine.service.Interface.Document.TheseUniversitaireService;
-import org.yassine.service.Interface.Utilisateur.UtilisateurService;
+import org.yassine.service.Interface.Utilisateur.EtudiantService;
+import org.yassine.service.Interface.Utilisateur.ProfesseurService;
 
 import java.util.List;
 
@@ -13,49 +14,73 @@ public class Bibliotheque {
 
     private static Bibliotheque instance;
 
-    private final UtilisateurService utilisateurService;
+    private final ProfesseurService professeurService;
+    private final EtudiantService etudiantService;
     private final LivreService livreService;
     private final MagazineService magazineService;
     private final JournalScientifiqueService journalService;
     private final TheseUniversitaireService theseService;
 
 
-    public Bibliotheque(UtilisateurService utilisateurService, LivreService livreService, MagazineService magazineService, JournalScientifiqueService journalService, TheseUniversitaireService theseService) {
-        this.utilisateurService = utilisateurService;
+    public Bibliotheque(ProfesseurService professeurService, EtudiantService etudiantService, LivreService livreService, MagazineService magazineService, JournalScientifiqueService journalService, TheseUniversitaireService theseService) {
+        this.professeurService = professeurService;
+        this.etudiantService = etudiantService;
         this.livreService = livreService;
         this.magazineService = magazineService;
         this.journalService = journalService;
         this.theseService = theseService;
     }
 
-    public static Bibliotheque getInstance(UtilisateurService utilisateurService, LivreService livreService, MagazineService magazineService, JournalScientifiqueService journalService, TheseUniversitaireService theseService) {
+    public static Bibliotheque getInstance(ProfesseurService professeurService, EtudiantService etudiantService, LivreService livreService, MagazineService magazineService, JournalScientifiqueService journalService, TheseUniversitaireService theseService) {
         if (instance == null) {
-            instance = new Bibliotheque(utilisateurService, livreService, magazineService, journalService, theseService);
+            instance = new Bibliotheque(professeurService, etudiantService, livreService, magazineService, journalService, theseService);
         }
         return instance;
     }
 
-    /* ============ Méthodes pour la gestion des utilisateurs ============*/
-    public Utilisateur getUtilisateurById(Integer id) {
-        return utilisateurService.getUtilisateurById(id);
+    /* ============ Méthodes pour la gestion des professeurs ============*/
+    public Professeur getProfesseurById(Integer id) {
+        return professeurService.getProfesseurById(id);
     }
 
-    public List<Utilisateur> getAllUtilisateurs() {
-        return utilisateurService.getAllUtilisateurs();
+    public List<Professeur> getAllProfesseurs() {
+        return professeurService.getAllProfesseurs();
     }
 
-    public void createUtilisateur(Utilisateur utilisateur) {
-        utilisateurService.createUtilisateur(utilisateur);
+    public void createProfesseur(Professeur professeur) {
+        professeurService.createProfesseur(professeur);
     }
 
-    public void updateUtilisateur(Integer id, Utilisateur utilisateur) {
-        utilisateurService.updateUtilisateur(id, utilisateur);
+    public void updateProfesseur(Integer id, Professeur professeur) {
+        professeurService.updateProfesseur(id, professeur);
     }
 
-    public void deleteUtilisateur(Integer id) {
-        utilisateurService.deleteUtilisateur(id);
+    public void deleteProfesseur(Integer id) {
+        professeurService.deleteProfesseur(id);
     }
-    /* ============ Fin méthodes pour la gestion des utilisateurs ============*/
+    /* ============ Fin méthodes pour la gestion des professeur ============*/
+
+    /* ============ Méthodes pour la gestion des etudiants ============*/
+    public Etudiant getEtudiantById(Integer id) {
+        return etudiantService.getEtudiantById(id);
+    }
+
+    public List<Etudiant> getAllEtudiants() {
+        return etudiantService.getAllEtudiants();
+    }
+
+    public void createEtudiant(Etudiant etudiant) {
+        etudiantService.createEtudiant(etudiant);
+    }
+
+    public void updateEtudiant(Integer id, Etudiant etudiant) {
+        etudiantService.updateEtudiant(id, etudiant);
+    }
+
+    public void deleteEtudiant(Integer id) {
+        etudiantService.deleteEtudiant(id);
+    }
+    /* ============ Fin méthodes pour la gestion des etudiants ============*/
 
     /* ============ Méthodes pour la gestion des livres ============*/
     public Livre getLivreById(Integer id) {
@@ -88,7 +113,7 @@ public class Bibliotheque {
         return magazineService.getMagazineById(id);
     }
 
-    public List <Magazine> getMagazineByTitre(String titre) {
+    public List<Magazine> getMagazineByTitre(String titre) {
         return magazineService.getMagazineByTitre(titre);
     }
 
@@ -114,7 +139,7 @@ public class Bibliotheque {
         return journalService.getJournalScientifiqueById(id);
     }
 
-    public List <JournalScientifique> getJournalScientifiqueByTitre(String titre) {
+    public List<JournalScientifique> getJournalScientifiqueByTitre(String titre) {
         return journalService.getJournalScientifiqueByTitre(titre);
     }
 
