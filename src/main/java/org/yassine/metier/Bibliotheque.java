@@ -45,6 +45,10 @@ public class Bibliotheque {
         return professeurService.getProfesseurById(id);
     }
 
+    public List <Professeur> getProfesseurByName(String name) {
+        return professeurService.getProfesseurByName(name);
+    }
+
     public List<Professeur> getAllProfesseurs() {
         return professeurService.getAllProfesseurs();
     }
@@ -65,6 +69,10 @@ public class Bibliotheque {
     /* ============ Méthodes pour la gestion des etudiants ============*/
     public Etudiant getEtudiantById(Integer id) {
         return etudiantService.getEtudiantById(id);
+    }
+
+    public List<Etudiant> getEtudiantByName(String name) {
+        return etudiantService.getEtudiantByName(name);
     }
 
     public List<Etudiant> getAllEtudiants() {

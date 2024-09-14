@@ -796,6 +796,64 @@ public class ConsoleUI {
     }
     /* ============ Fin suppression des utilisateur ============*/
 
+    /* ============ Recherche des utilisateur ============*/
+    private void rechercherUtilisateur(){
+        System.out.println("=== RECHERCHER UN UTILISATEUR ===");
+        System.out.println("Sélectionnez l' utilisateur à rechercher :");
+        System.out.println("1. Professeur");
+        System.out.println("2. Etudiant");
+        System.out.println("0. Retour au menu principal");
+
+        int choix = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (choix) {
+            case 1:
+                rechercherProfesseur();
+                break;
+            case 2:
+                rechercherEtudiant();
+                break;
+            case 0:
+                System.out.println("Retour au menu principal.");
+                return;
+            default:
+                System.out.println("Choix invalide, veuillez réessayer.");
+                rechercherDocument();
+                break;
+        }
+    }
+
+    private void rechercherProfesseur(){
+        System.out.println("Entrez le nom du professeur à rechercher :");
+        String nom = scanner.nextLine();
+        List<Professeur> resultats = (List<Professeur>) bibliotheque.getProfesseurByName(nom);
+        if (resultats.isEmpty()) {
+            System.out.println("Aucun professeur trouvé pour le nom : " + nom);
+        } else {
+            System.out.println("Professeurs trouvés :");
+            for (Professeur prof : resultats) {
+                System.out.println(prof.afficherDetails());
+            }
+        }
+    }
+
+    private void rechercherEtudiant(){
+        System.out.println("Entrez le nom de l'etudiant à rechercher :");
+        String nom = scanner.nextLine();
+        List<Etudiant> resultats = (List<Etudiant>) bibliotheque.getEtudiantByName(nom);
+        if (resultats.isEmpty()) {
+            System.out.println("Aucun etudiant trouvé pour le nom : " + nom);
+        } else {
+            System.out.println("Etudiants trouvés :");
+            for (Etudiant etudiant : resultats) {
+                System.out.println(etudiant.afficherDetails());
+            }
+        }
+    }
+
+    /* ============ Fin recherche des utilisateur ============*/
+
 
     /* ====================== Fin gestion des utilisateur ======================*/
     private int getIntInput(String prompt) {

@@ -16,4 +16,8 @@ public class Professeur extends Utilisateur {
     public void setMatiere(String matiere) {
         this.matiere = matiere;
     }
+
+    public String afficherDetails(){
+        return String.format("Professeur: %s, Email: %s, Matiere: %s ",getName(),getEmail(),matiere);
+    }
 }

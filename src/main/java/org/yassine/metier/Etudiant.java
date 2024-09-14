@@ -19,4 +19,8 @@ public class Etudiant extends Utilisateur {
         this.branche = branche;
     }
 
+    public String afficherDetails(){
+        return String.format("Etudiant : %s, Email: %s, Branche: %s",getName(),getEmail(),branche);
+    }
+
 }
