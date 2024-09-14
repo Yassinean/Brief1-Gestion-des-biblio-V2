@@ -1,4 +1,4 @@
-package org.yassine.metier.Interface;
+package org.yassine.persistance.Interface;
 
 import org.yassine.metier.Abstract.Utilisateur;
 import org.yassine.metier.JournalScientifique;

@@ -1,8 +1,8 @@
 package org.yassine.metier;
 
 import org.yassine.metier.Abstract.Document;
-import org.yassine.metier.Interface.Empruntable;
-import org.yassine.metier.Interface.Reservable;
+import org.yassine.persistance.Interface.Empruntable;
+import org.yassine.persistance.Interface.Reservable;
 
 import java.time.LocalDate;
 
