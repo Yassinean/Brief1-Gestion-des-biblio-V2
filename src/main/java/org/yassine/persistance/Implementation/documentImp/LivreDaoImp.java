@@ -38,7 +38,7 @@ public class LivreDaoImp implements LivreDaoInterface {
     }
 
     @Override
-    public void updateLivre(Integer id, Livre livre) {
+    public void updateLivre(Livre livre) {
 
         String sql = "UPDATE livre SET titre = ?, auteur = ?, datePublication = ?, nombredepage = ?, isbn = ? WHERE id = ?";
 
@@ -48,7 +48,7 @@ public class LivreDaoImp implements LivreDaoInterface {
             statement.setString(3, livre.getDatePublication());
             statement.setInt(4, livre.getNombreDePages());
             statement.setString(5, livre.getIsbn());
-            statement.setInt(6, id);
+            statement.setInt(6, livre.getId());
 
             statement.executeUpdate();
         } catch (SQLException e) {

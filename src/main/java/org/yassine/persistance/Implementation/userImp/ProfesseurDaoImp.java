@@ -57,8 +57,8 @@ public class ProfesseurDaoImp implements ProfesseurDaoInterface {
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, professeur.getName());
             pstmt.setString(2, professeur.getEmail());
-            pstmt.setString(4, professeur.getMatiere());
-            pstmt.setInt(5, professeur.getId());
+            pstmt.setString(3, professeur.getMatiere());
+            pstmt.setInt(4, professeur.getId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

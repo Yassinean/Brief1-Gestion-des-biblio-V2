@@ -75,8 +75,8 @@ public class Bibliotheque {
         etudiantService.createEtudiant(etudiant);
     }
 
-    public void updateEtudiant(Integer id, Etudiant etudiant) {
-        etudiantService.updateEtudiant(id, etudiant);
+    public void updateEtudiant(Etudiant etudiant) {
+        etudiantService.updateEtudiant(etudiant);
     }
 
     public void deleteEtudiant(Integer id) {

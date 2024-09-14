@@ -595,13 +595,13 @@ public class ConsoleUI {
                 ajouterUtilisateur();
                 break;
             case 2:
-//                modifierUtilisateur();
+                modifierUtilisateur();
                 break;
             case 3:
-//                supprimerUtilisateur();
+                supprimerUtilisateur();
                 break;
             case 4:
-//                rechercherUtilisateur();
+                rechercherUtilisateur();
                 break;
             case 0:
                 // Retour au menu principal
@@ -707,7 +707,7 @@ public class ConsoleUI {
                     System.out.println("Option invalide.");
                     return;
             }
-            bibliotheque.updateEtudiant(id, etudiant);
+            bibliotheque.updateEtudiant(etudiant);
             System.out.println("Etudiant : Mr. " + etudiant.getName() + " modifié avec succès.");
         } else {
             System.out.println("Etudiant introuvable.");
@@ -748,7 +748,53 @@ public class ConsoleUI {
         }
     }
 
-    /* ============ Fin creation des documents ============*/
+    /* ============ Fin modification des utilisateur ============*/
+
+    /* ============ Suppression des utilisateur ============*/
+    private void supprimerUtilisateur(){
+        System.out.println("\n=== SUPPRIMER UN UTILISATEUR ===");
+        System.out.println("1. Professeur");
+        System.out.println("2. Etudiant");
+
+        int typeChoix = getIntInput("Choisissez le type de document: ");
+
+        switch (typeChoix) {
+            case 1:
+                supprimerProfesseur();
+                break;
+            case 2:
+                supprimerEtudiant();
+                break;
+            default:
+                System.out.println("Type d'utilisateur invalide.");
+                return;
+        }
+    }
+
+    private void supprimerProfesseur(){
+        System.out.println("=== SUPPRIMER UN PROFESSEUR ===");
+        int id = getIntInput("Entrez l'ID du professeur à supprimer: ");
+        Professeur professeur = bibliotheque.getProfesseurById(id);
+        if (professeur != null) {
+            bibliotheque.deleteProfesseur(id);
+            System.out.println("Professeur supprime avec succes");
+        } else {
+            System.out.println("Professeur introuvable.");
+        }
+    }
+
+    private void supprimerEtudiant(){
+        System.out.println("=== SUPPRIMER UN ETUDIANT ===");
+        int id = getIntInput("Entrez l'ID de l'etudiant à supprimer: ");
+        Etudiant etudiant = bibliotheque.getEtudiantById(id);
+        if (etudiant != null) {
+            bibliotheque.deleteEtudiant(id);
+            System.out.println("Etudiant supprime avec succes");
+        } else {
+            System.out.println("Etudiant introuvable.");
+        }
+    }
+    /* ============ Fin suppression des utilisateur ============*/
 
 
     /* ====================== Fin gestion des utilisateur ======================*/
