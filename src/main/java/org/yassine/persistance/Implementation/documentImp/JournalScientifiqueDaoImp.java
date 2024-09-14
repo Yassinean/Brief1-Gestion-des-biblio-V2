@@ -28,7 +28,7 @@ public class JournalScientifiqueDaoImp implements JournalScientifiqueDaoInterfac
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, js.getTitre());
             statement.setString(2, js.getAuteur());
-            statement.setString(3, js.getDatePublication());
+            statement.setDate(3, Date.valueOf(js.getDatePublication()));
             statement.setInt(4, js.getNombreDePages());
             statement.setString(5, js.getDomaine());
 
@@ -47,7 +47,7 @@ public class JournalScientifiqueDaoImp implements JournalScientifiqueDaoInterfac
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, js.getTitre());
             statement.setString(2, js.getAuteur());
-            statement.setString(3,js.getDatePublication());
+            statement.setDate(3, Date.valueOf(js.getDatePublication()));
             statement.setInt(4, js.getNombreDePages());
             statement.setString(5, js.getDomaine());
 
@@ -90,7 +90,7 @@ public class JournalScientifiqueDaoImp implements JournalScientifiqueDaoInterfac
                 return new JournalScientifique(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getString("datePublication"),
+                        resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombredepage"),
                         resultSet.getString("domaine")
                 );
@@ -113,7 +113,7 @@ public class JournalScientifiqueDaoImp implements JournalScientifiqueDaoInterfac
                 JournalScientifique js = new JournalScientifique(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getString("datePublication"),
+                        resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePage"),
                         resultSet.getString("domainerechecher")
                 );
@@ -140,7 +140,7 @@ public class JournalScientifiqueDaoImp implements JournalScientifiqueDaoInterfac
                 JournalScientifique js = new JournalScientifique(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getString("datePublication"),
+                        resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePage"),
                         resultSet.getString("domainerecherche")
                 );

@@ -15,7 +15,7 @@ public interface EtudiantService {
 
     void createEtudiant(Etudiant etudiant);
 
-    void updateEtudiant(Etudiant etudiant);
+    void updateEtudiant(Integer id , Etudiant etudiant);
 
     void deleteEtudiant(Integer id);
 }

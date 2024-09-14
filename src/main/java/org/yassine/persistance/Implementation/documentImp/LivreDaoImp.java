@@ -28,7 +28,7 @@ public class LivreDaoImp implements LivreDaoInterface {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, livre.getTitre());
             statement.setString(2, livre.getAuteur());
-            statement.setString(3, livre.getDatePublication());
+            statement.setDate(3, Date.valueOf(livre.getDatePublication()));
             statement.setInt(4, livre.getNombreDePages());
             statement.setString(5, livre.getIsbn());
             statement.executeUpdate();
@@ -38,17 +38,17 @@ public class LivreDaoImp implements LivreDaoInterface {
     }
 
     @Override
-    public void updateLivre(Livre livre) {
+    public void updateLivre(Integer id ,Livre livre) {
 
         String sql = "UPDATE livre SET titre = ?, auteur = ?, datePublication = ?, nombredepage = ?, isbn = ? WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, livre.getTitre());
             statement.setString(2, livre.getAuteur());
-            statement.setString(3, livre.getDatePublication());
+            statement.setDate(3, Date.valueOf(livre.getDatePublication()));
             statement.setInt(4, livre.getNombreDePages());
             statement.setString(5, livre.getIsbn());
-            statement.setInt(6, livre.getId());
+            statement.setInt(6, id);
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -88,7 +88,7 @@ public class LivreDaoImp implements LivreDaoInterface {
                 return new Livre(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getString("datePublication"),
+                        resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombredepage"),
                         resultSet.getString("isbn")
                 );
@@ -111,7 +111,7 @@ public class LivreDaoImp implements LivreDaoInterface {
                 Livre livre = new Livre(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getString("datePublication"),
+                        resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombredepage"),
                         resultSet.getString("isbn")
                 );
@@ -138,7 +138,7 @@ public class LivreDaoImp implements LivreDaoInterface {
                 Livre livre = new Livre(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getString("datePublication"),
+                        resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePage"),
                         resultSet.getString("isbn")
                 );

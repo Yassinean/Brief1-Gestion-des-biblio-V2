@@ -1,7 +1,9 @@
 package org.yassine.metier;
 
-
-
+import org.yassine.metier.Abstract.Document;
+import org.yassine.metier.Abstract.Utilisateur;
+import org.yassine.persistance.Implementation.EmpruntableImp;
+import org.yassine.persistance.Implementation.ReservableImp;
 import org.yassine.service.Interface.Document.JournalScientifiqueService;
 import org.yassine.service.Interface.Document.LivreService;
 import org.yassine.service.Interface.Document.MagazineService;
@@ -9,7 +11,10 @@ import org.yassine.service.Interface.Document.TheseUniversitaireService;
 import org.yassine.service.Interface.Utilisateur.EtudiantService;
 import org.yassine.service.Interface.Utilisateur.ProfesseurService;
 
-import java.util.List;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class Bibliotheque {
 
@@ -21,9 +26,14 @@ public class Bibliotheque {
     private final MagazineService magazineService;
     private final JournalScientifiqueService journalService;
     private final TheseUniversitaireService theseService;
+    private final EmpruntableImp docEmprunt = new EmpruntableImp();
+    private final ReservableImp docReserve = new ReservableImp();
+    private final Map<Integer, Document> documentMap = new HashMap<>();
+    private final Map<Integer, Utilisateur> utilisateurMap = new HashMap<>();
 
+    private static final Logger logger = Logger.getLogger(Bibliotheque.class.getName());
 
-    public Bibliotheque(LivreService livreService, MagazineService magazineService, JournalScientifiqueService journalService, TheseUniversitaireService theseService ,ProfesseurService professeurService, EtudiantService etudiantService) {
+    public Bibliotheque(LivreService livreService, MagazineService magazineService, JournalScientifiqueService journalService, TheseUniversitaireService theseService, ProfesseurService professeurService, EtudiantService etudiantService) {
         this.livreService = livreService;
         this.magazineService = magazineService;
         this.journalService = journalService;
@@ -32,20 +42,19 @@ public class Bibliotheque {
         this.etudiantService = etudiantService;
     }
 
-    public static Bibliotheque getInstance(LivreService livreService, MagazineService magazineService, JournalScientifiqueService journalService, TheseUniversitaireService theseService ,ProfesseurService professeurService, EtudiantService etudiantService) {
+    public static Bibliotheque getInstance(LivreService livreService, MagazineService magazineService, JournalScientifiqueService journalService, TheseUniversitaireService theseService, ProfesseurService professeurService, EtudiantService etudiantService) {
         if (instance == null) {
-            instance = new Bibliotheque(livreService, magazineService, journalService, theseService,professeurService, etudiantService);
+            instance = new Bibliotheque(livreService, magazineService, journalService, theseService, professeurService, etudiantService);
         }
         return instance;
     }
 
-
-    /* ============ Méthodes pour la gestion des professeurs ============*/
+    /* ============ Méthodes pour la gestion des professeurs ============ */
     public Professeur getProfesseurById(Integer id) {
         return professeurService.getProfesseurById(id);
     }
 
-    public List <Professeur> getProfesseurByName(String name) {
+    public List<Professeur> getProfesseurByName(String name) {
         return professeurService.getProfesseurByName(name);
     }
 
@@ -64,9 +73,9 @@ public class Bibliotheque {
     public void deleteProfesseur(Integer id) {
         professeurService.deleteProfesseur(id);
     }
-    /* ============ Fin méthodes pour la gestion des professeur ============*/
+    /* ============ Fin méthodes pour la gestion des professeurs ============ */
 
-    /* ============ Méthodes pour la gestion des etudiants ============*/
+    /* ============ Méthodes pour la gestion des etudiants ============ */
     public Etudiant getEtudiantById(Integer id) {
         return etudiantService.getEtudiantById(id);
     }
@@ -83,16 +92,16 @@ public class Bibliotheque {
         etudiantService.createEtudiant(etudiant);
     }
 
-    public void updateEtudiant(Etudiant etudiant) {
-        etudiantService.updateEtudiant(etudiant);
+    public void updateEtudiant(Integer id, Etudiant etudiant) {
+        etudiantService.updateEtudiant(id, etudiant);
     }
 
     public void deleteEtudiant(Integer id) {
         etudiantService.deleteEtudiant(id);
     }
-    /* ============ Fin méthodes pour la gestion des etudiants ============*/
+    /* ============ Fin méthodes pour la gestion des étudiants ============ */
 
-    /* ============ Méthodes pour la gestion des livres ============*/
+    /* ============ Méthodes pour la gestion des livres ============ */
     public Livre getLivreById(Integer id) {
         return livreService.getLivreById(id);
     }
@@ -116,9 +125,9 @@ public class Bibliotheque {
     public void deleteLivre(Integer id) {
         livreService.deleteLivre(id);
     }
-    /* ============ Fin méthodes pour la gestion des livres ============*/
+    /* ============ Fin méthodes pour la gestion des livres ============ */
 
-    /* ============ Méthodes pour la gestion des magazines ============*/
+    /* ============ Méthodes pour la gestion des magazines ============ */
     public Magazine getMagazineById(Integer id) {
         return magazineService.getMagazineById(id);
     }
@@ -142,9 +151,9 @@ public class Bibliotheque {
     public void deleteMagazine(Integer id) {
         magazineService.deleteMagazine(id);
     }
-    /* ============ Fin méthodes pour la gestion des magazines ============*/
+    /* ============ Fin méthodes pour la gestion des magazines ============ */
 
-    /* ============ Méthodes pour la gestion des journalScientifiques ============*/
+    /* ============ Méthodes pour la gestion des journaux scientifiques ============ */
     public JournalScientifique getJournalScientifiqueById(Integer id) {
         return journalService.getJournalScientifiqueById(id);
     }
@@ -168,9 +177,9 @@ public class Bibliotheque {
     public void deleteJournalScientifique(Integer id) {
         journalService.deleteJournalScientifique(id);
     }
-    /* ============ Fin méthodes pour la gestion des journalScientifiques ============*/
+    /* ============ Fin méthodes pour la gestion des journaux scientifiques ============ */
 
-    /* ============ Méthodes pour la gestion des theseUniversitaires ============*/
+    /* ============ Méthodes pour la gestion des theses universitaires ============ */
     public TheseUniversitaire getTheseUniversitaireById(Integer id) {
         return theseService.getTheseUniversitaireById(id);
     }
@@ -183,17 +192,147 @@ public class Bibliotheque {
         return theseService.getAllTheseUniversitaires();
     }
 
-    public void createTheseUniversitaire(TheseUniversitaire livre) {
-        theseService.createTheseUniversitaire(livre);
+    public void createTheseUniversitaire(TheseUniversitaire these) {
+        theseService.createTheseUniversitaire(these);
     }
 
-    public void updateTheseUniversitaire(Integer id, TheseUniversitaire livre) {
-        theseService.updateTheseUniversitaire(id, livre);
+    public void updateTheseUniversitaire(Integer id, TheseUniversitaire these) {
+        theseService.updateTheseUniversitaire(id, these);
     }
 
     public void deleteTheseUniversitaire(Integer id) {
         theseService.deleteTheseUniversitaire(id);
     }
-    /* ============ Fin méthodes pour la gestion des theseUniversitaires ============*/
-}
+    /* ============ Fin méthodes pour la gestion des theses universitaires ============ */
 
+    /* ============ Méthodes pour la gestion des documents et utilisateurs "HashMap & stream api" ============ */
+    public void addDocument(Document document) {
+        documentMap.put(document.getId(), document);
+    }
+
+    public void addUtilisateur(Utilisateur utilisateur) {
+        utilisateurMap.put(utilisateur.getId(), utilisateur);
+    }
+
+    public Document getDocumentById(Integer id) {
+        return documentMap.get(id);
+    }
+
+    public Utilisateur getUtilisateurById(Integer id) {
+        return utilisateurMap.get(id);
+    }
+
+    public List<Document> getAllDocuments() {
+        return new ArrayList<>(documentMap.values());
+    }
+
+    public List<Utilisateur> getAllUtilisateurs() {
+        return new ArrayList<>(utilisateurMap.values());
+    }
+
+    public List<Document> searchDocumentByTitle(String title) {
+        return documentMap.values().stream()
+                .filter(doc -> doc.getTitre().equalsIgnoreCase(title))
+                .collect(Collectors.toList());
+    }
+
+    public List<Utilisateur> searchUtilisateurByName(String name) {
+        return utilisateurMap.values().stream()
+                .filter(user -> user.getName().equalsIgnoreCase(name))
+                .collect(Collectors.toList());
+    }
+    /* ============ Fin méthodes pour la gestion des documents et utilisateurs ============ */
+
+    /* ============ Méthodes pour la gestion des emprunts et réservations ============ */
+    public void empruntDocument(Document document, Utilisateur utilisateur) {
+        if (document instanceof Livre livre) {
+            docEmprunt.empruntLivre(livre, utilisateur);
+        } else if (document instanceof Magazine magazine) {
+            docEmprunt.empruntMagazine(magazine, utilisateur);
+        } else if (document instanceof TheseUniversitaire theseUniversitaire) {
+            docEmprunt.empruntThese(theseUniversitaire, utilisateur);
+        } else if (document instanceof JournalScientifique journalScientifique) {
+            docEmprunt.empruntJournal(journalScientifique, utilisateur);
+        } else {
+            logger.log(Level.WARNING, "Type de document inconnu pour l'emprunt.");
+        }
+    }
+
+    public void reserveDocument(Document document, Utilisateur utilisateur) {
+        if (document instanceof Livre livre) {
+            docReserve.reserveLivre(livre, utilisateur);
+        } else if (document instanceof Magazine magazine) {
+            docReserve.reserveMagazine(magazine, utilisateur);
+        } else if (document instanceof TheseUniversitaire theseUniversitaire) {
+            docReserve.reserveThese(theseUniversitaire, utilisateur);
+        } else if (document instanceof JournalScientifique journalScientifique) {
+            docReserve.reserveJournal(journalScientifique, utilisateur);
+        } else {
+            logger.log(Level.WARNING, "Type de document inconnu pour la réservation.");
+        }
+    }
+
+    public void retournerDocument(Document document, Utilisateur utilisateur) {
+        if (document instanceof Livre livre) {
+            docEmprunt.retournerLivre(livre, utilisateur);
+        } else if (document instanceof Magazine magazine) {
+            docEmprunt.retournerMagazine(magazine, utilisateur);
+        } else if (document instanceof TheseUniversitaire theseUniversitaire) {
+            docEmprunt.retournerThese(theseUniversitaire, utilisateur);
+        } else if (document instanceof JournalScientifique journalScientifique) {
+            docEmprunt.retournerJournal(journalScientifique, utilisateur);
+        } else {
+            logger.log(Level.WARNING, "Type de document inconnu pour le retour.");
+        }
+    }
+
+    public void annuleReserveDocument(Document document, Utilisateur utilisateur) {
+        if (document instanceof Livre livre) {
+            docReserve.annuleReserveLivre(livre, utilisateur);
+        } else if (document instanceof Magazine magazine) {
+            docReserve.annuleReserveMagazine(magazine, utilisateur);
+        } else if (document instanceof TheseUniversitaire theseUniversitaire) {
+            docReserve.annuleReserveThese(theseUniversitaire, utilisateur);
+        } else if (document instanceof JournalScientifique journalScientifique) {
+            docReserve.annuleReserveJournal(journalScientifique, utilisateur);
+        } else {
+            logger.log(Level.WARNING, "Type de document inconnu pour l'annulation de la réservation.");
+        }
+    }
+
+    private void handleDocumentOperation(Document document, Utilisateur utilisateur, String operation) {
+        if (document instanceof Livre livre) {
+            switch (operation) {
+                case "emprunt" -> docEmprunt.empruntLivre(livre, utilisateur);
+                case "reserve" -> docReserve.reserveLivre(livre, utilisateur);
+                case "retourner" -> docEmprunt.retournerLivre(livre, utilisateur);
+                case "annuleReserve" -> docReserve.annuleReserveLivre(livre, utilisateur);
+            }
+        } else if (document instanceof Magazine magazine) {
+            switch (operation) {
+                case "emprunt" -> docEmprunt.empruntMagazine(magazine, utilisateur);
+                case "reserve" -> docReserve.reserveMagazine(magazine, utilisateur);
+                case "retourner" -> docEmprunt.retournerMagazine(magazine, utilisateur);
+                case "annuleReserve" -> docReserve.annuleReserveMagazine(magazine, utilisateur);
+            }
+        } else if (document instanceof JournalScientifique journal) {
+            switch (operation) {
+                case "emprunt" -> docEmprunt.empruntJournal(journal, utilisateur);
+                case "reserve" -> docReserve.reserveJournal(journal, utilisateur);
+                case "retourner" -> docEmprunt.retournerJournal(journal, utilisateur);
+                case "annuleReserve" -> docReserve.annuleReserveJournal(journal, utilisateur);
+            }
+        } else if (document instanceof TheseUniversitaire thess) {
+            switch (operation) {
+                case "emprunt" -> docEmprunt.empruntThese(thess, utilisateur);
+                case "reserve" -> docReserve.reserveThese(thess, utilisateur);
+                case "retourner" -> docEmprunt.retournerThese(thess, utilisateur);
+                case "annuleReserve" -> docReserve.annuleReserveThese(thess, utilisateur);
+            }
+        }
+        else {
+            logger.log(Level.WARNING, "Unknown document type for operation: " + operation);
+        }
+    }
+    /* ============ Fin méthodes pour la gestion des emprunts et réservations ============ */
+}

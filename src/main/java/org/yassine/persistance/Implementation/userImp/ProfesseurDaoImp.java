@@ -1,10 +1,11 @@
 package org.yassine.persistance.Implementation.userImp;
 
 import org.yassine.config.DbConfig;
-import org.yassine.metier.Etudiant;
-import org.yassine.metier.Livre;
-import org.yassine.metier.Professeur;
+import org.yassine.metier.*;
+import org.yassine.metier.Abstract.Utilisateur;
+import org.yassine.persistance.Interface.Empruntable;
 import org.yassine.persistance.Interface.Utilisateur.ProfesseurDaoInterface;
+import org.yassine.utilitaire.UserCheck;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -145,5 +146,6 @@ public class ProfesseurDaoImp implements ProfesseurDaoInterface {
         return professeurs;
 
     }
+
 }
 

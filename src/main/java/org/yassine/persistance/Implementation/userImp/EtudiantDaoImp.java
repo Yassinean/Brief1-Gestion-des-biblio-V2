@@ -37,13 +37,13 @@ public class EtudiantDaoImp implements EtudiantDaoInterface {
     }
 
     @Override
-    public void updateEtudiant(Etudiant etudiant) {
+    public void updateEtudiant(Integer id,Etudiant etudiant) {
         String sql = "UPDATE etudiant SET name = ?, email = ?, branche = ? WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, etudiant.getName());
             pstmt.setString(2, etudiant.getEmail());
             pstmt.setString(3, etudiant.getBranche());
-            pstmt.setInt(4, etudiant.getId());
+            pstmt.setInt(4,id);
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {

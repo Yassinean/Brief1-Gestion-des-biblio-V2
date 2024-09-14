@@ -8,7 +8,7 @@ public interface LivreDaoInterface {
 
     void createLivre(Livre livre);
 
-    void updateLivre(Livre livre);
+    void updateLivre(Integer id ,Livre livre);
 
     void deleteLivre(Integer livreId);
 

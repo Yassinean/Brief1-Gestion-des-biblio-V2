@@ -28,7 +28,7 @@ public class MagazineDaoImp implements MagazineDaoInterface {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, magazine.getTitre());
             statement.setString(2, magazine.getAuteur());
-            statement.setString(3, magazine.getDatePublication());
+            statement.setDate(3, Date.valueOf(magazine.getDatePublication()));
             statement.setInt(4, magazine.getNombreDePages());
             statement.setInt(5, magazine.getNumero());
             statement.executeUpdate();
@@ -45,7 +45,7 @@ public class MagazineDaoImp implements MagazineDaoInterface {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, magazine.getTitre());
             statement.setString(2, magazine.getAuteur());
-            statement.setString(3, magazine.getDatePublication());
+            statement.setDate(3, Date.valueOf(magazine.getDatePublication()));
             statement.setInt(4, magazine.getNombreDePages());
             statement.setInt(5, magazine.getNumero());
             statement.setInt(6, id);
@@ -89,7 +89,7 @@ public class MagazineDaoImp implements MagazineDaoInterface {
                 return new Magazine(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getString("datePublication"),
+                        resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombredepage"),
                         resultSet.getInt("numero")
                 );
@@ -112,7 +112,7 @@ public class MagazineDaoImp implements MagazineDaoInterface {
                 Magazine magazine = new Magazine(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getString("datePublication"),
+                        resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePage"),
                         resultSet.getInt("numero")
                 );
@@ -139,7 +139,7 @@ public class MagazineDaoImp implements MagazineDaoInterface {
                 Magazine magazine = new Magazine(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getString("datePublication"),
+                        resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePage"),
                         resultSet.getInt("numero")
                 );

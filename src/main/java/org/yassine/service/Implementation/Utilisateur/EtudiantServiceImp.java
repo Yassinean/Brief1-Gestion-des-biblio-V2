@@ -45,13 +45,13 @@ public class EtudiantServiceImp implements EtudiantService {
     }
 
     @Override
-    public void updateEtudiant(Etudiant etudiant) {
-        Etudiant etudiantUpdate = etudiantDao.getEtudiantById(etudiant.getId());
+    public void updateEtudiant(Integer id, Etudiant etudiant) {
+        Etudiant etudiantUpdate = etudiantDao.getEtudiantById(id);
         if (etudiantUpdate == null){
             System.out.println("Etudiant avec ID " + etudiant.getId() + " non trouve !");
         }
 
-        etudiantDao.updateEtudiant(etudiantUpdate);
+        etudiantDao.updateEtudiant(id , etudiantUpdate);
     }
 
     @Override

@@ -28,7 +28,7 @@ public class TheseUniversitaireDaoImp implements TheseUniversitaireDaoInterface 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, theseUniversitaire.getTitre());
             statement.setString(2, theseUniversitaire.getAuteur());
-            statement.setString(3, theseUniversitaire.getDatePublication());
+            statement.setDate(3, Date.valueOf(theseUniversitaire.getDatePublication()));
             statement.setInt(4, theseUniversitaire.getNombreDePages());
             statement.setString(5, theseUniversitaire.getUniversite());
             statement.setString(6, theseUniversitaire.getDomaine());
@@ -48,7 +48,7 @@ public class TheseUniversitaireDaoImp implements TheseUniversitaireDaoInterface 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, theseUniversitaire.getTitre());
             statement.setString(2, theseUniversitaire.getAuteur());
-            statement.setString(3, theseUniversitaire.getDatePublication());
+            statement.setDate(3, Date.valueOf(theseUniversitaire.getDatePublication()));
             statement.setInt(4, theseUniversitaire.getNombreDePages());
             statement.setString(5, theseUniversitaire.getUniversite());
             statement.setString(6, theseUniversitaire.getDomaine());
@@ -93,7 +93,7 @@ public class TheseUniversitaireDaoImp implements TheseUniversitaireDaoInterface 
                 return new TheseUniversitaire(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getString("datePublication"),
+                        resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombredepage"),
                         resultSet.getString("universite"),
                         resultSet.getString("domaine")
@@ -117,7 +117,7 @@ public class TheseUniversitaireDaoImp implements TheseUniversitaireDaoInterface 
                 TheseUniversitaire these = new TheseUniversitaire(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getString("datePublication"),
+                        resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePage"),
                         resultSet.getString("universite"),
                         resultSet.getString("domaine")
@@ -145,7 +145,7 @@ public class TheseUniversitaireDaoImp implements TheseUniversitaireDaoInterface 
                 TheseUniversitaire theseU = new TheseUniversitaire(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getString("datePublication"),
+                        resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePage"),
                         resultSet.getString("universite"),
                         resultSet.getString("domaine")

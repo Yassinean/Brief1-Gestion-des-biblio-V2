@@ -2,6 +2,8 @@ package org.yassine.presentation;
 
 import org.yassine.metier.*;
 
+import org.yassine.metier.Abstract.Document;
+import org.yassine.metier.Abstract.Utilisateur;
 import org.yassine.service.Interface.Document.JournalScientifiqueService;
 import org.yassine.service.Interface.Document.LivreService;
 import org.yassine.service.Interface.Document.MagazineService;
@@ -20,6 +22,12 @@ public class ConsoleUI {
     private static ConsoleUI instance;
     private Scanner scanner;
     private Bibliotheque bibliotheque;
+    private EtudiantService etudiantService;
+    private ProfesseurService professeurService;
+    private LivreService livreService;
+    private MagazineService magazineService;
+    private JournalScientifiqueService journalScientifiqueService;
+    private TheseUniversitaireService theseUniversitaireService;
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private ConsoleUI(Bibliotheque bibliotheque) {
@@ -47,10 +55,10 @@ public class ConsoleUI {
                     gestionUtilisateurs();
                     break;
                 case 3:
-//                    gestionEmprunts();
+                    gestionEmprunts();
                     break;
                 case 4:
-//                    gestionReservations();
+                    gestionReservations();
                     break;
                 case 0:
                     exit = true;
@@ -67,6 +75,8 @@ public class ConsoleUI {
         System.out.println("\n=== SYSTÈME DE GESTION DE BIBLIOTHÈQUE ===");
         System.out.println("1. Gestion des documents");
         System.out.println("2. Gestion des utilisateurs");
+        System.out.println("3. Gestion des emprunte");
+        System.out.println("4. Gestion des reservation");
         System.out.println("0. Quitter");
     }
 
@@ -77,8 +87,6 @@ public class ConsoleUI {
         System.out.println("2. Modifier un document");
         System.out.println("3. Supprimer un document");
         System.out.println("4. Rechercher un document");
-        System.out.println("5. Emprunter un document");
-        System.out.println("6. Reserver un document");
         System.out.println("0. Retour au menu principal");
 
         int choice = getIntInput("Choisissez une option: ");
@@ -94,12 +102,6 @@ public class ConsoleUI {
                 break;
             case 4:
                 rechercherDocument();
-                break;
-            case 5:
-                emprunterDocument();
-                break;
-            case 6:
-                reserverDocument();
                 break;
             case 0:
                 // Retour au menu principal
@@ -568,15 +570,6 @@ public class ConsoleUI {
     }
     /* ============ Fin recherche des documents ============*/
 
-    private void emprunterDocument() {
-        System.out.println("=== EMPRUNTER UN DOCUMENT ===");
-        // Implement search logic
-    }
-
-    private void reserverDocument() {
-        System.out.println("=== RESERVER UN DOCUMENT ===");
-        // Implement search logic
-    }
     /* ====================== Fin gestion des documents ======================*/
 
     /* ====================== Gestion des utilisateur ======================*/
@@ -639,7 +632,7 @@ public class ConsoleUI {
         scanner.nextLine();
         String matiere = getStringInput("Entrez la matiere du professeur: ");
         scanner.nextLine();
-        Professeur prof = new Professeur(name,email,matiere);
+        Professeur prof = new Professeur(name, email, matiere);
         bibliotheque.createProfesseur(prof);
         System.out.println("Professeur : Mr. " + name + " est ajoute avec succes");
     }
@@ -652,7 +645,7 @@ public class ConsoleUI {
         scanner.nextLine();
         String branche = getStringInput("Entrez la branche de l'etudiant : ");
         scanner.nextLine();
-        Etudiant etudiant = new Etudiant(name,email,branche);
+        Etudiant etudiant = new Etudiant(name, email, branche);
         bibliotheque.createEtudiant(etudiant);
         System.out.println("Etudiant : Mr. " + name + " est ajoute avec succes");
     }
@@ -706,7 +699,7 @@ public class ConsoleUI {
                     System.out.println("Option invalide.");
                     return;
             }
-            bibliotheque.updateEtudiant(etudiant);
+            bibliotheque.updateEtudiant(id, etudiant);
             System.out.println("Etudiant : Mr. " + etudiant.getName() + " modifié avec succès.");
         } else {
             System.out.println("Etudiant introuvable.");
@@ -750,7 +743,7 @@ public class ConsoleUI {
     /* ============ Fin modification des utilisateur ============*/
 
     /* ============ Suppression des utilisateur ============*/
-    private void supprimerUtilisateur(){
+    private void supprimerUtilisateur() {
         System.out.println("\n=== SUPPRIMER UN UTILISATEUR ===");
         System.out.println("1. Professeur");
         System.out.println("2. Etudiant");
@@ -770,7 +763,7 @@ public class ConsoleUI {
         }
     }
 
-    private void supprimerProfesseur(){
+    private void supprimerProfesseur() {
         System.out.println("=== SUPPRIMER UN PROFESSEUR ===");
         int id = getIntInput("Entrez l'ID du professeur à supprimer: ");
         Professeur professeur = bibliotheque.getProfesseurById(id);
@@ -782,7 +775,7 @@ public class ConsoleUI {
         }
     }
 
-    private void supprimerEtudiant(){
+    private void supprimerEtudiant() {
         System.out.println("=== SUPPRIMER UN ETUDIANT ===");
         int id = getIntInput("Entrez l'ID de l'etudiant à supprimer: ");
         Etudiant etudiant = bibliotheque.getEtudiantById(id);
@@ -796,7 +789,7 @@ public class ConsoleUI {
     /* ============ Fin suppression des utilisateur ============*/
 
     /* ============ Recherche des utilisateur ============*/
-    private void rechercherUtilisateur(){
+    private void rechercherUtilisateur() {
         System.out.println("=== RECHERCHER UN UTILISATEUR ===");
         System.out.println("Sélectionnez l' utilisateur à rechercher :");
         System.out.println("1. Professeur");
@@ -823,7 +816,7 @@ public class ConsoleUI {
         }
     }
 
-    private void rechercherProfesseur(){
+    private void rechercherProfesseur() {
         System.out.println("Entrez le nom du professeur à rechercher :");
         String nom = scanner.nextLine();
         List<Professeur> resultats = (List<Professeur>) bibliotheque.getProfesseurByName(nom);
@@ -837,7 +830,7 @@ public class ConsoleUI {
         }
     }
 
-    private void rechercherEtudiant(){
+    private void rechercherEtudiant() {
         System.out.println("Entrez le nom de l'etudiant à rechercher :");
         String nom = scanner.nextLine();
         List<Etudiant> resultats = (List<Etudiant>) bibliotheque.getEtudiantByName(nom);
@@ -853,8 +846,66 @@ public class ConsoleUI {
 
     /* ============ Fin recherche des utilisateur ============*/
 
-
     /* ====================== Fin gestion des utilisateur ======================*/
+
+
+    /* ====================== Emprunter Et Reserver ======================*/
+    private void gestionEmprunts() {
+        System.out.println("\n=== GESTION DES EMPRUNTS ===");
+
+        int utilisateurId = getIntInput("Entrez l'ID de l'utilisateur: ");
+        Etudiant etudiant = etudiantService.getEtudiantById(utilisateurId);
+        Professeur prof = professeurService.getProfesseurById(utilisateurId);
+        Utilisateur utilisateur = bibliotheque.getUtilisateurById(utilisateurId);
+
+        if (etudiant == null && prof == null) {
+            System.out.println("Utilisateur non trouvé.");
+            return;
+        }
+
+        int documentId = getIntInput("Entrez l'ID du document à réserver: ");
+        Document document = bibliotheque.getDocumentById(documentId);
+
+        if (document == null) {
+            System.out.println("Document non trouvé.");
+            return;
+        }
+
+        bibliotheque.empruntDocument(document,utilisateur);
+        System.out.println("Document emprunté avec succès.");
+    }
+
+    // Methode pour reserver document
+    private void gestionReservations() {
+        System.out.println("\n=== GESTION DES RÉSERVATIONS ===");
+
+        int utilisateurId = getIntInput("Entrez l'ID de l'utilisateur: ");
+
+        Etudiant etudiant = etudiantService.getEtudiantById(utilisateurId);
+        Professeur prof = professeurService.getProfesseurById(utilisateurId);
+        Utilisateur utilisateur = bibliotheque.getUtilisateurById(utilisateurId);
+
+        if (etudiant == null) {
+            System.out.println("Etudiant non trouvé.");
+            return;
+        }else System.out.println("Professeur non trouve.");
+
+        int documentId = getIntInput("Entrez l'ID du document à réserver: ");
+        Document document = bibliotheque.getDocumentById(documentId); // Replace with appropriate method based on document type
+        if (document == null) {
+            System.out.println("Document non trouvé.");
+            return;
+        }
+
+        bibliotheque.reserveDocument(document,utilisateur);
+        System.out.println("Document réservé avec succès.");
+    }
+
+
+
+    /* ====================== Fin emprunter et reserver ======================*/
+
+
     private int getIntInput(String prompt) {
         System.out.print(prompt);
         while (!scanner.hasNextInt()) {

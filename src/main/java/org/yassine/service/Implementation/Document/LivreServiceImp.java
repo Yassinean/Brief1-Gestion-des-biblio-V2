@@ -35,7 +35,7 @@ public class LivreServiceImp implements LivreService {
 
     @Override
     public void updateLivre(Integer id, Livre livre) {
-        livreDao.updateLivre(livre);
+        livreDao.updateLivre(id , livre);
     }
 
     @Override

@@ -8,6 +8,7 @@ public abstract class Document {
     private String auteur;
     private LocalDate datePublication;
     private int nombreDePages;
+    private DroitAccess droitAcces;
 
 
     public Document(String titre, String auteur, LocalDate datePublication, int nombreDePages) {
@@ -55,6 +56,14 @@ public abstract class Document {
 
     public void setNombreDePages(int nombreDePages) {
         this.nombreDePages = nombreDePages;
+    }
+
+    public DroitAccess getDroitAcces() {
+        return droitAcces;
+    }
+
+    public void setDroitAcces(DroitAccess droitAcces) {
+        this.droitAcces = droitAcces;
     }
 
     public abstract String afficherDetails();

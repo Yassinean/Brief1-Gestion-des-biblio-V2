@@ -6,10 +6,8 @@ import org.yassine.persistance.Interface.Reservable;
 
 import java.time.LocalDate;
 
-public class Livre extends Document implements Empruntable, Reservable {
+public class Livre extends Document {
     private String isbn;
-    private boolean estEmprunte;
-    private boolean estReserve;
 
     public Livre(String titre, String auteur, LocalDate datePublication, int nombreDePages , String isbn) {
         super(titre, auteur, datePublication, nombreDePages);
@@ -29,39 +27,4 @@ public class Livre extends Document implements Empruntable, Reservable {
         return String.format("Livre: %s, Auteur: %s, ISBN: %s, Pages: %d",getTitre(),getAuteur(),isbn);
     }
 
-    @Override
-    public boolean emprunter() {
-        if (!estEmprunte && !estReserve) {
-            estEmprunte = true;
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean retourner() {
-        if (estEmprunte) {
-            estEmprunte = false;
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean reserver() {
-        if (!estEmprunte && !estReserve) {
-            estReserve = true;
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean annulerReservation() {
-        if (estReserve) {
-            estReserve = false;
-            return true;
-        }
-        return false;
-    }
 }

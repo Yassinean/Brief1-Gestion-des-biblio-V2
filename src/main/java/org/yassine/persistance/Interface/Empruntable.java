@@ -12,11 +12,11 @@ public interface Empruntable {
     void empruntLivre(Livre livre, Utilisateur utilisateur);
     void empruntMagazine(Magazine magazine , Utilisateur utilisateur);
     void empruntThese(TheseUniversitaire theseUniversitaire, Utilisateur utilisateur);
-    void empruntJOURNAL(JournalScientifique journalScientifique , Utilisateur utilisateur);
+    void empruntJournal(JournalScientifique journalScientifique , Utilisateur utilisateur);
 
-    void retournLivre(Livre livre,Utilisateur utilisateur);
-    void retournMagazine(Magazine magazine ,Utilisateur utilisateur);
-    void retournThese(TheseUniversitaire theseUniversitaire,Utilisateur utilisateur);
-    void retournJournal(JournalScientifique journalScientifique ,Utilisateur utilisateur);
+    void retournerLivre(Livre livre,Utilisateur utilisateur);
+    void retournerMagazine(Magazine magazine ,Utilisateur utilisateur);
+    void retournerThese(TheseUniversitaire theseUniversitaire,Utilisateur utilisateur);
+    void retournerJournal(JournalScientifique journalScientifique ,Utilisateur utilisateur);
 
 }
