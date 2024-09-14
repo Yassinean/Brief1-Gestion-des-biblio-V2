@@ -24,7 +24,7 @@ public class Livre extends Document implements Empruntable, Reservable {
 
     @Override
     public String afficherDetails() {
-        return String.format("Livre: %s, Auteur: %s, ISBN: %s, Pages: %d",getTitre(),getAuteur(),isbn, nombreDePages);
+        return String.format("Livre: %s, Auteur: %s, ISBN: %s, Pages: %d",getTitre(),getAuteur(),isbn);
     }
 
     @Override

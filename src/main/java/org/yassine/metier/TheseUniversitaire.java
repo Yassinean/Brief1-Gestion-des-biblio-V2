@@ -29,6 +29,6 @@ public class TheseUniversitaire extends Document {
 
     @Override
     public String afficherDetails() {
-        return String.format("Livre: %s, Auteur: %s, ISBN: %s, Pages: %d",getTitre(),getAuteur(),domaine , universite, nombreDePages);
+        return String.format("Livre: %s, Auteur: %s, ISBN: %s, Pages: %d",getTitre(),getAuteur(),domaine , universite);
     }
 }

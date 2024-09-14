@@ -2,10 +2,10 @@ package org.yassine.metier.Abstract;
 
 public abstract class Document {
     private int id;
-    protected String titre;
-    protected String auteur;
-    protected String datePublication;
-    protected int nombreDePages;
+    private String titre;
+    private String auteur;
+    private String datePublication;
+    private int nombreDePages;
 
 
     public Document(String titre, String auteur, String datePublication, int nombreDePages) {
