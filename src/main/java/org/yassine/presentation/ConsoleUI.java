@@ -1,10 +1,7 @@
 package org.yassine.presentation;
 
 import org.yassine.metier.*;
-import org.yassine.service.Implementation.Document.JournalScientifiqueServiceImp;
-import org.yassine.service.Implementation.Document.LivreServiceImp;
-import org.yassine.service.Implementation.Document.MagazineServiceImp;
-import org.yassine.service.Implementation.Document.TheseUniversitaireServiceImp;
+
 import org.yassine.service.Interface.Document.JournalScientifiqueService;
 import org.yassine.service.Interface.Document.LivreService;
 import org.yassine.service.Interface.Document.MagazineService;
@@ -12,16 +9,18 @@ import org.yassine.service.Interface.Document.TheseUniversitaireService;
 import org.yassine.service.Interface.Utilisateur.EtudiantService;
 import org.yassine.service.Interface.Utilisateur.ProfesseurService;
 
-
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
+import java.time.format.DateTimeFormatter;
 
 public class ConsoleUI {
 
     private static ConsoleUI instance;
     private Scanner scanner;
     private Bibliotheque bibliotheque;
-
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private ConsoleUI(Bibliotheque bibliotheque) {
         scanner = new Scanner(System.in);
@@ -146,7 +145,7 @@ public class ConsoleUI {
         scanner.nextLine();
         String auteur = getStringInput("Entrez l'auteur du livre: ");
         scanner.nextLine();
-        String datePublication = getStringInput("Entrez la date de publication du livre: ");
+        LocalDate datePublication = getDateInput("Entrez la date de publication du livre: ");
         scanner.nextLine();
         int nombreDePage = getIntInput("Entrez le nombre de page du livre: ");
         scanner.nextLine();
@@ -162,7 +161,7 @@ public class ConsoleUI {
         scanner.nextLine();
         String auteur = getStringInput("Entrez l'auteur du magazine: ");
         scanner.nextLine();
-        String datePublication = getStringInput("Entrez la date de publication du magazine: ");
+        LocalDate datePublication = getDateInput("Entrez la date de publication du magazine: ");
         scanner.nextLine();
         int nombreDePage = getIntInput("Entrez le nombre de page du magazine: ");
         scanner.nextLine();
@@ -179,7 +178,7 @@ public class ConsoleUI {
         scanner.nextLine();
         String auteur = getStringInput("Entrez l'auteur du journal: ");
         scanner.nextLine();
-        String datePublication = getStringInput("Entrez la date de publication du journal: ");
+        LocalDate datePublication = getDateInput("Entrez la date de publication du journal: ");
         scanner.nextLine();
         int nombreDePage = getIntInput("Entrez le nombre de page du journal: ");
         scanner.nextLine();
@@ -196,7 +195,7 @@ public class ConsoleUI {
         scanner.nextLine();
         String auteur = getStringInput("Entrez l'auteur du these: ");
         scanner.nextLine();
-        String datePublication = getStringInput("Entrez la date de publication du these: ");
+        LocalDate datePublication = getDateInput("Entrez la date de publication du these: ");
         scanner.nextLine();
         int nombreDePage = getIntInput("Entrez le nombre de page du these: ");
         scanner.nextLine();
@@ -260,7 +259,7 @@ public class ConsoleUI {
                     livre.setAuteur(nouvelAuteur);
                     break;
                 case 3:
-                    String nouvelleDate = getStringInput("Entrez la nouvelle date de publication: ");
+                    LocalDate nouvelleDate = getDateInput("Entrez la nouvelle date de publication: ");
                     livre.setDatePublication(nouvelleDate);
                     break;
                 case 4:
@@ -304,7 +303,7 @@ public class ConsoleUI {
                     magazine.setAuteur(nouvelAuteur);
                     break;
                 case 3:
-                    String nouvelleDate = getStringInput("Entrez la nouvelle date de publication: ");
+                    LocalDate nouvelleDate = getDateInput("Entrez la nouvelle date de publication: ");
                     magazine.setDatePublication(nouvelleDate);
                     break;
                 case 4:
@@ -348,7 +347,7 @@ public class ConsoleUI {
                     journal.setAuteur(nouvelAuteur);
                     break;
                 case 3:
-                    String nouvelleDate = getStringInput("Entrez la nouvelle date de publication: ");
+                    LocalDate nouvelleDate = getDateInput("Entrez la nouvelle date de publication: ");
                     journal.setDatePublication(nouvelleDate);
                     break;
                 case 4:
@@ -392,7 +391,7 @@ public class ConsoleUI {
                     these.setAuteur(nouvelAuteur);
                     break;
                 case 3:
-                    String nouvelleDate = getStringInput("Entrez la nouvelle date de publication: ");
+                    LocalDate nouvelleDate = getDateInput("Entrez la nouvelle date de publication: ");
                     these.setDatePublication(nouvelleDate);
                     break;
                 case 4:
@@ -869,5 +868,17 @@ public class ConsoleUI {
     public String getStringInput(String prompt) {
         System.out.print(prompt);
         return scanner.next();
+    }
+
+    private LocalDate getDateInput(String prompt) {
+        System.out.print(prompt);
+        while (true) {
+            String dateInput = scanner.next();
+            try {
+                return LocalDate.parse(dateInput, DATE_FORMATTER);
+            } catch (DateTimeParseException e) {
+                System.out.println("Format de date invalide. Veuillez entrer la date au format dd/MM/yyyy.");
+            }
+        }
     }
 }

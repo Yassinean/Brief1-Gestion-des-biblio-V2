@@ -4,12 +4,14 @@ import org.yassine.metier.Abstract.Document;
 import org.yassine.metier.Interface.Empruntable;
 import org.yassine.metier.Interface.Reservable;
 
+import java.time.LocalDate;
+
 public class Livre extends Document implements Empruntable, Reservable {
     private String isbn;
     private boolean estEmprunte;
     private boolean estReserve;
 
-    public Livre(String titre, String auteur, String datePublication, int nombreDePages , String isbn) {
+    public Livre(String titre, String auteur, LocalDate datePublication, int nombreDePages , String isbn) {
         super(titre, auteur, datePublication, nombreDePages);
         this.isbn = isbn;
     }

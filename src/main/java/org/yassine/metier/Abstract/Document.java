@@ -1,14 +1,16 @@
 package org.yassine.metier.Abstract;
 
+import java.time.LocalDate;
+
 public abstract class Document {
     private int id;
     private String titre;
     private String auteur;
-    private String datePublication;
+    private LocalDate datePublication;
     private int nombreDePages;
 
 
-    public Document(String titre, String auteur, String datePublication, int nombreDePages) {
+    public Document(String titre, String auteur, LocalDate datePublication, int nombreDePages) {
         this.titre = titre;
         this.auteur = auteur;
         this.datePublication = datePublication;
@@ -39,11 +41,11 @@ public abstract class Document {
         this.auteur = auteur;
     }
 
-    public String getDatePublication() {
+    public LocalDate getDatePublication() {
         return datePublication;
     }
 
-    public void setDatePublication(String datePublication) {
+    public void setDatePublication(LocalDate datePublication) {
         this.datePublication = datePublication;
     }
 
