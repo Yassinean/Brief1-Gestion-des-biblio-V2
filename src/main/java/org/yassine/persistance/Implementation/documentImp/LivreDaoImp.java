@@ -1,6 +1,7 @@
 package org.yassine.persistance.Implementation.documentImp;
 
 import org.yassine.config.DbConfig;
+import org.yassine.metier.Abstract.DroitAccess;
 import org.yassine.metier.Livre;
 import org.yassine.persistance.Interface.Document.LivreDaoInterface;
 
@@ -23,7 +24,7 @@ public class LivreDaoImp implements LivreDaoInterface {
     @Override
     public void createLivre(Livre livre) {
 
-        String sql = "INSERT INTO livre (titre, auteur, datePublication, nombredepage, isbn) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO livre (titre, auteur, datePublication, nombredepage, isbn , acces) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, livre.getTitre());
@@ -31,6 +32,7 @@ public class LivreDaoImp implements LivreDaoInterface {
             statement.setDate(3, Date.valueOf(livre.getDatePublication()));
             statement.setInt(4, livre.getNombreDePages());
             statement.setString(5, livre.getIsbn());
+            statement.setString(6, livre.getDroitAcces().name());
             statement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -40,7 +42,7 @@ public class LivreDaoImp implements LivreDaoInterface {
     @Override
     public void updateLivre(Integer id ,Livre livre) {
 
-        String sql = "UPDATE livre SET titre = ?, auteur = ?, datePublication = ?, nombredepage = ?, isbn = ? WHERE id = ?";
+        String sql = "UPDATE livre SET titre = ?, auteur = ?, datePublication = ?, nombredepage = ?, isbn = ? , acces = ? WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, livre.getTitre());
@@ -48,7 +50,8 @@ public class LivreDaoImp implements LivreDaoInterface {
             statement.setDate(3, Date.valueOf(livre.getDatePublication()));
             statement.setInt(4, livre.getNombreDePages());
             statement.setString(5, livre.getIsbn());
-            statement.setInt(6, id);
+            statement.setString(6, livre.getDroitAcces().name());
+            statement.setInt(7, id);
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -79,17 +82,20 @@ public class LivreDaoImp implements LivreDaoInterface {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
+                DroitAccess droitAcces = DroitAccess.valueOf(resultSet.getString("acces"));
                 System.out.println("ID: " + resultSet.getInt("id"));
                 System.out.println("Titre: " + resultSet.getString("titre"));
                 System.out.println("Auteur: " + resultSet.getString("auteur"));
                 System.out.println("Date de publication: " + resultSet.getString("datePublication"));
                 System.out.println("Nombre de pages: " + resultSet.getInt("nombredepage"));
                 System.out.println("ISBN: " + resultSet.getString("isbn"));
+                System.out.println("Accessibilite pour : " + resultSet.getString("acces"));
                 return new Livre(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombredepage"),
+                        droitAcces,
                         resultSet.getString("isbn")
                 );
             }else System.out.println("Nous n'avons pas ce document en base de donne");
@@ -108,11 +114,13 @@ public class LivreDaoImp implements LivreDaoInterface {
              ResultSet resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()) {
+                DroitAccess droitAcces = DroitAccess.valueOf(resultSet.getString("acces"));
                 Livre livre = new Livre(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombredepage"),
+                        droitAcces,
                         resultSet.getString("isbn")
                 );
                 livres.add(livre);
@@ -135,11 +143,13 @@ public class LivreDaoImp implements LivreDaoInterface {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
+                DroitAccess droitAcces = DroitAccess.valueOf(resultSet.getString("acces"));
                 Livre livre = new Livre(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePage"),
+                        droitAcces,
                         resultSet.getString("isbn")
                 );
                 livres.add(livre);

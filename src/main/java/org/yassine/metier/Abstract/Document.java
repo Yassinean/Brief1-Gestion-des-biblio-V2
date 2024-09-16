@@ -11,11 +11,12 @@ public abstract class Document {
     private DroitAccess droitAcces;
 
 
-    public Document(String titre, String auteur, LocalDate datePublication, int nombreDePages) {
+    public Document(String titre, String auteur, LocalDate datePublication, int nombreDePages , DroitAccess droitAcces) {
         this.titre = titre;
         this.auteur = auteur;
         this.datePublication = datePublication;
         this.nombreDePages = nombreDePages;
+        this.droitAcces = droitAcces;
     }
 
     public int getId() {

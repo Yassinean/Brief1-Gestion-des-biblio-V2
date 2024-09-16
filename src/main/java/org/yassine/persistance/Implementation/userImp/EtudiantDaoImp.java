@@ -19,7 +19,11 @@ public class EtudiantDaoImp implements EtudiantDaoInterface {
     private final Connection connection;
 
     public EtudiantDaoImp() throws SQLException {
-        this.connection = DbConfig.getInstance().getConnection();
+        try {
+            this.connection = DbConfig.getInstance().getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -37,24 +41,25 @@ public class EtudiantDaoImp implements EtudiantDaoInterface {
     }
 
     @Override
-    public void updateEtudiant(Integer id,Etudiant etudiant) {
+    public void updateEtudiant(Integer id, Etudiant etudiant) {
         String sql = "UPDATE etudiant SET name = ?, email = ?, branche = ? WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, etudiant.getName());
             pstmt.setString(2, etudiant.getEmail());
             pstmt.setString(3, etudiant.getBranche());
-            pstmt.setInt(4,id);
+            pstmt.setInt(4, id);
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
-                logger.info("Etudiant mis à jour avec succès.");
+                logger.info("Etudiant with ID " + id + " updated successfully.");
             } else {
-                logger.warning("Aucun étudiant trouvé avec l'ID : " + etudiant.getId());
+                logger.warning("No student found with ID: " + id);
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Erreur lors de la mise à jour de l'étudiant", e);
+            logger.log(Level.SEVERE, "Error updating student with ID: " + id, e);
         }
     }
+
 
     @Override
     public void deleteEtudiant(Integer id) {

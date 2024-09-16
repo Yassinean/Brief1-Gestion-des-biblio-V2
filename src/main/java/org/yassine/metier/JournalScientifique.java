@@ -1,13 +1,14 @@
 package org.yassine.metier;
 
 import org.yassine.metier.Abstract.Document;
+import org.yassine.metier.Abstract.DroitAccess;
 
 import java.time.LocalDate;
 
 public class JournalScientifique extends Document {
     private String domaineRecherche;
-    public JournalScientifique(String titre, String auteur, LocalDate datePublication, int nombreDePages , String domaineRecherche) {
-        super(titre, auteur, datePublication, nombreDePages);
+    public JournalScientifique(String titre, String auteur, LocalDate datePublication, int nombreDePages , String domaineRecherche, DroitAccess droitAccess) {
+        super(titre, auteur, datePublication, nombreDePages,droitAccess);
         this.domaineRecherche = domaineRecherche;
     }
 
@@ -21,6 +22,6 @@ public class JournalScientifique extends Document {
 
     @Override
     public String afficherDetails() {
-        return String.format("Livre: %s, Auteur: %s, ISBN: %s, Pages: %d",getTitre(),getAuteur(),domaineRecherche);
+        return String.format("Journal Scientifique: %s, Auteur: %s, Pages: %d, Date de publication : %te %<tB %<ty,Domaine de recherche: %s", getTitre(), getAuteur(), getNombreDePages(),getDatePublication(),domaineRecherche);
     }
 }

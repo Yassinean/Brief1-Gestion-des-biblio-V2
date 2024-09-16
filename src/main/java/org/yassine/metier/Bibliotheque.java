@@ -2,12 +2,16 @@ package org.yassine.metier;
 
 import org.yassine.metier.Abstract.Document;
 import org.yassine.metier.Abstract.Utilisateur;
-import org.yassine.persistance.Implementation.EmpruntableImp;
+import org.yassine.persistance.Implementation.EmpruntableDaoImp;
 import org.yassine.persistance.Implementation.ReservableImp;
+import org.yassine.service.Implementation.EmpruntableServiceImp;
+import org.yassine.service.Implementation.ReservableServiceImp;
 import org.yassine.service.Interface.Document.JournalScientifiqueService;
 import org.yassine.service.Interface.Document.LivreService;
 import org.yassine.service.Interface.Document.MagazineService;
 import org.yassine.service.Interface.Document.TheseUniversitaireService;
+import org.yassine.service.Interface.EmpruntableService;
+import org.yassine.service.Interface.ReservableService;
 import org.yassine.service.Interface.Utilisateur.EtudiantService;
 import org.yassine.service.Interface.Utilisateur.ProfesseurService;
 
@@ -26,8 +30,8 @@ public class Bibliotheque {
     private final MagazineService magazineService;
     private final JournalScientifiqueService journalService;
     private final TheseUniversitaireService theseService;
-    private final EmpruntableImp docEmprunt = new EmpruntableImp();
-    private final ReservableImp docReserve = new ReservableImp();
+    private final EmpruntableService docEmprunt = new EmpruntableServiceImp();
+    private final ReservableService docReserve = new ReservableServiceImp();
     private final Map<Integer, Document> documentMap = new HashMap<>();
     private final Map<Integer, Utilisateur> utilisateurMap = new HashMap<>();
 
@@ -184,7 +188,7 @@ public class Bibliotheque {
         return theseService.getTheseUniversitaireById(id);
     }
 
-    public TheseUniversitaire getTheseUniversitaireByTitre(String titre) {
+    public List <TheseUniversitaire> getTheseUniversitaireByTitre(String titre) {
         return theseService.getTheseUniversitaireByTitre(titre);
     }
 
@@ -215,10 +219,44 @@ public class Bibliotheque {
     }
 
     public Document getDocumentById(Integer id) {
+        Livre livre = livreService.getLivreById(id);
+        if (livre != null) {
+            return livre;
+        }
+
+        Magazine magazine = magazineService.getMagazineById(id);
+        if (magazine != null) {
+            return magazine;
+        }
+
+        JournalScientifique journal = journalService.getJournalScientifiqueById(id);
+        if (journal != null) {
+            return journal;
+        }
+
+        TheseUniversitaire these = theseService.getTheseUniversitaireById(id);
+        if (these != null) {
+            return these;
+        }
+
         return documentMap.get(id);
     }
 
     public Utilisateur getUtilisateurById(Integer id) {
+
+        // premiere chose soit avoir est ce que le prof n'est pas null
+        Professeur professeur = professeurService.getProfesseurById(id);
+        if (professeur != null) {
+            return professeur;
+        }
+
+        // apres, try to find an Etudiant
+        Etudiant etudiant = etudiantService.getEtudiantById(id);
+        if (etudiant != null) {
+            return etudiant;
+        }
+
+        // If not found in both services, fallback to the utilisateurMap
         return utilisateurMap.get(id);
     }
 
@@ -329,8 +367,7 @@ public class Bibliotheque {
                 case "retourner" -> docEmprunt.retournerThese(thess, utilisateur);
                 case "annuleReserve" -> docReserve.annuleReserveThese(thess, utilisateur);
             }
-        }
-        else {
+        } else {
             logger.log(Level.WARNING, "Unknown document type for operation: " + operation);
         }
     }

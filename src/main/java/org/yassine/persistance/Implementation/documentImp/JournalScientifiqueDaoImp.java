@@ -1,6 +1,7 @@
 package org.yassine.persistance.Implementation.documentImp;
 
 import org.yassine.config.DbConfig;
+import org.yassine.metier.Abstract.DroitAccess;
 import org.yassine.metier.JournalScientifique;
 import org.yassine.persistance.Interface.Document.JournalScientifiqueDaoInterface;
 
@@ -22,8 +23,7 @@ public class JournalScientifiqueDaoImp implements JournalScientifiqueDaoInterfac
 
     @Override
     public void createJournalScientifique(JournalScientifique js) {
-
-        String sql = "INSERT INTO journalscientifique (titre, auteur, datePublication, nombreDePage, domainerecherche) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO journalscientifique (titre, auteur, datePublication, nombreDePage, domainerecherche, acces) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, js.getTitre());
@@ -31,18 +31,16 @@ public class JournalScientifiqueDaoImp implements JournalScientifiqueDaoInterfac
             statement.setDate(3, Date.valueOf(js.getDatePublication()));
             statement.setInt(4, js.getNombreDePages());
             statement.setString(5, js.getDomaine());
-
+            statement.setString(6, js.getDroitAcces().name());
             statement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-
         }
     }
 
     @Override
     public void updateJournalScientifique(JournalScientifique js) {
-
-        String sql = "UPDATE journalscientifique SET titre = ?, auteur = ?, datePublication = ?, nombreDePage = ?, domainerecherche = ? WHERE id = ?";
+        String sql = "UPDATE journalscientifique SET titre = ?, auteur = ?, datePublication = ?, nombreDePage = ?, domainerecherche = ?, acces = ? WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, js.getTitre());
@@ -50,7 +48,8 @@ public class JournalScientifiqueDaoImp implements JournalScientifiqueDaoInterfac
             statement.setDate(3, Date.valueOf(js.getDatePublication()));
             statement.setInt(4, js.getNombreDePages());
             statement.setString(5, js.getDomaine());
-
+            statement.setString(6, js.getDroitAcces().name());
+            statement.setInt(7, js.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -66,14 +65,11 @@ public class JournalScientifiqueDaoImp implements JournalScientifiqueDaoInterfac
             statement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-
         }
-
     }
 
     @Override
     public JournalScientifique displayJournalScientifique(Integer jsId) {
-        List<JournalScientifique> js = new ArrayList<>();
         String sql = "SELECT * FROM journalscientifique WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -81,18 +77,21 @@ public class JournalScientifiqueDaoImp implements JournalScientifiqueDaoInterfac
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
+                DroitAccess droitAcces = DroitAccess.valueOf(resultSet.getString("acces"));
                 System.out.println("ID: " + resultSet.getInt("id"));
                 System.out.println("Titre: " + resultSet.getString("titre"));
                 System.out.println("Auteur: " + resultSet.getString("auteur"));
                 System.out.println("Date de publication: " + resultSet.getString("datePublication"));
                 System.out.println("Nombre de pages: " + resultSet.getInt("nombreDePage"));
                 System.out.println("Domaine: " + resultSet.getString("domainerecherche"));
+                System.out.println("Accessibility: " + resultSet.getString("acces"));
                 return new JournalScientifique(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
-                        resultSet.getInt("nombredepage"),
-                        resultSet.getString("domaine")
+                        resultSet.getInt("nombreDePage"),
+                        resultSet.getString("domainerecherche"),
+                        droitAcces
                 );
             }
         } catch (SQLException e) {
@@ -110,12 +109,14 @@ public class JournalScientifiqueDaoImp implements JournalScientifiqueDaoInterfac
              ResultSet resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()) {
+                DroitAccess droitAcces = DroitAccess.valueOf(resultSet.getString("acces"));
                 JournalScientifique js = new JournalScientifique(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePage"),
-                        resultSet.getString("domainerechecher")
+                        resultSet.getString("domainerecherche"),
+                        droitAcces
                 );
                 journals.add(js);
             }
@@ -123,7 +124,6 @@ public class JournalScientifiqueDaoImp implements JournalScientifiqueDaoInterfac
             System.out.println(e.getMessage());
         }
         return journals;
-
     }
 
     @Override
@@ -137,12 +137,14 @@ public class JournalScientifiqueDaoImp implements JournalScientifiqueDaoInterfac
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
+                DroitAccess droitAcces = DroitAccess.valueOf(resultSet.getString("acces"));
                 JournalScientifique js = new JournalScientifique(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePage"),
-                        resultSet.getString("domainerecherche")
+                        resultSet.getString("domainerecherche"),
+                        droitAcces
                 );
                 journals.add(js);
             }
@@ -151,5 +153,4 @@ public class JournalScientifiqueDaoImp implements JournalScientifiqueDaoInterfac
         }
         return journals;
     }
-
 }

@@ -1,14 +1,16 @@
 package org.yassine.metier;
 
 import org.yassine.metier.Abstract.Document;
+import org.yassine.metier.Abstract.DroitAccess;
 
 import java.time.LocalDate;
 
 public class TheseUniversitaire extends Document {
     private String universite;
     private String domaine;
-    public TheseUniversitaire(String titre, String auteur, LocalDate datePublication, int nombreDePages , String universite , String domaine ) {
-        super(titre, auteur, datePublication, nombreDePages);
+
+    public TheseUniversitaire(String titre, String auteur, LocalDate datePublication, int nombreDePages, String universite, String domaine, DroitAccess droitAccess) {
+        super(titre, auteur, datePublication, nombreDePages, droitAccess);
         this.universite = universite;
         this.domaine = domaine;
     }
@@ -31,6 +33,6 @@ public class TheseUniversitaire extends Document {
 
     @Override
     public String afficherDetails() {
-        return String.format("Livre: %s, Auteur: %s, ISBN: %s, Pages: %d",getTitre(),getAuteur(),domaine , universite);
+        return String.format("These Universitaire: %s, Auteur: %s, Pages: %d, Date de publication : %te %<tB %<ty,Domaine: %s,Universite :%s", getTitre(), getAuteur(), getNombreDePages(),getDatePublication(),domaine, universite);
     }
 }

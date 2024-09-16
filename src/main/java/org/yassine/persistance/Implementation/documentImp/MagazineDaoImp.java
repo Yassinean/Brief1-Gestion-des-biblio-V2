@@ -1,6 +1,7 @@
 package org.yassine.persistance.Implementation.documentImp;
 
 import org.yassine.config.DbConfig;
+import org.yassine.metier.Abstract.DroitAccess;
 import org.yassine.metier.Magazine;
 import org.yassine.persistance.Interface.Document.MagazineDaoInterface;
 
@@ -23,7 +24,7 @@ public class MagazineDaoImp implements MagazineDaoInterface {
     @Override
     public void createMagazine(Magazine magazine) {
 
-        String sql = "INSERT INTO magazine (titre, auteur, datePublication, nombredepage, numero) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO magazine (titre, auteur, datePublication, nombredepage, numero , acces) VALUES (?, ?, ?, ?, ? , ? )";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, magazine.getTitre());
@@ -31,6 +32,7 @@ public class MagazineDaoImp implements MagazineDaoInterface {
             statement.setDate(3, Date.valueOf(magazine.getDatePublication()));
             statement.setInt(4, magazine.getNombreDePages());
             statement.setInt(5, magazine.getNumero());
+            statement.setString(6, magazine.getDroitAcces().name());
             statement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -40,7 +42,7 @@ public class MagazineDaoImp implements MagazineDaoInterface {
     @Override
     public void updateMagazine(Integer id, Magazine magazine) {
 
-        String sql = "UPDATE magazine SET titre = ?, auteur = ?, datePublication = ?, nombredepage = ?, numero = ? WHERE id = ?";
+        String sql = "UPDATE magazine SET titre = ?, auteur = ?, datePublication = ?, nombredepage = ?, numero = ? , acces = ? WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, magazine.getTitre());
@@ -48,7 +50,8 @@ public class MagazineDaoImp implements MagazineDaoInterface {
             statement.setDate(3, Date.valueOf(magazine.getDatePublication()));
             statement.setInt(4, magazine.getNombreDePages());
             statement.setInt(5, magazine.getNumero());
-            statement.setInt(6, id);
+            statement.setString(6, magazine.getDroitAcces().name());
+            statement.setInt(7, id);
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -80,17 +83,20 @@ public class MagazineDaoImp implements MagazineDaoInterface {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
+                DroitAccess droitAcces = DroitAccess.valueOf(resultSet.getString("acces"));
                 System.out.println("ID: " + resultSet.getInt("id"));
                 System.out.println("Titre: " + resultSet.getString("titre"));
                 System.out.println("Auteur: " + resultSet.getString("auteur"));
                 System.out.println("Date de publication: " + resultSet.getString("datePublication"));
                 System.out.println("Nombre de pages: " + resultSet.getInt("nombreDePage"));
                 System.out.println("Numero : " + resultSet.getInt("numero"));
+                System.out.println("Accessibility : " + resultSet.getInt("acces"));
                 return new Magazine(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombredepage"),
+                        droitAcces,
                         resultSet.getInt("numero")
                 );
             }
@@ -109,11 +115,13 @@ public class MagazineDaoImp implements MagazineDaoInterface {
              ResultSet resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()) {
+                DroitAccess droitAcces = DroitAccess.valueOf(resultSet.getString("acces"));
                 Magazine magazine = new Magazine(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePage"),
+                        droitAcces,
                         resultSet.getInt("numero")
                 );
                 magazines.add(magazine);
@@ -136,11 +144,13 @@ public class MagazineDaoImp implements MagazineDaoInterface {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
+                DroitAccess droitAcces = DroitAccess.valueOf(resultSet.getString("acces"));
                 Magazine magazine = new Magazine(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
                         resultSet.getDate("datePublication").toLocalDate(),
                         resultSet.getInt("nombreDePage"),
+                        droitAcces,
                         resultSet.getInt("numero")
                 );
                 magazines.add(magazine);

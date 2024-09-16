@@ -21,8 +21,8 @@ public class TheseUniversitaireServiceImp implements TheseUniversitaireService {
     }
 
     @Override
-    public TheseUniversitaire getTheseUniversitaireByTitre(String titre) {
-        return (TheseUniversitaire) theseUniversitaireDao.searchTheseUniversitaire(titre);
+    public List<TheseUniversitaire> getTheseUniversitaireByTitre(String titre) {
+        return theseUniversitaireDao.searchTheseUniversitaire(titre);
     }
 
     @Override

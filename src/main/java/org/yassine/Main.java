@@ -24,6 +24,8 @@ import org.yassine.service.Implementation.Utilisateur.ProfesseurServiceImp;
 
 
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.Iterator;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
@@ -49,5 +51,6 @@ public class Main {
         // Initialize and start the ConsoleUI
         ConsoleUI ui = ConsoleUI.getInstance(bibliotheque, livreService, magazineService , journalService , theseService , professeurService, etudiantService);
         ui.start();
+
     }
 }

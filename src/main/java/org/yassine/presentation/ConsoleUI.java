@@ -3,6 +3,7 @@ package org.yassine.presentation;
 import org.yassine.metier.*;
 
 import org.yassine.metier.Abstract.Document;
+import org.yassine.metier.Abstract.DroitAccess;
 import org.yassine.metier.Abstract.Utilisateur;
 import org.yassine.service.Interface.Document.JournalScientifiqueService;
 import org.yassine.service.Interface.Document.LivreService;
@@ -152,7 +153,29 @@ public class ConsoleUI {
         int nombreDePage = getIntInput("Entrez le nombre de page du livre: ");
         scanner.nextLine();
         String isbn = getStringInput("Entrez l'ISBN du livre: ");
-        Livre livre = new Livre(titre, auteur, datePublication, nombreDePage, isbn);
+        scanner.nextLine();
+        DroitAccess droitAcces = null;
+        while (true) {
+            System.out.println("Sélectionnez le droit d'accès pour ce livre :");
+            System.out.println("1. Etudiant");
+            System.out.println("2. Professeur");
+            System.out.println("3. Tout");
+            int choixAcces = getIntInput("Tapez votre choix : ");
+
+            if (choixAcces == 1) {
+                droitAcces = DroitAccess.Etudiant;
+            } else if (choixAcces == 2) {
+                droitAcces = DroitAccess.Professeur;
+            } else if (choixAcces == 3) {
+                droitAcces = DroitAccess.tout;
+            } else {
+                System.out.println("Choix invalide. Veuillez sélectionner une option valide.");
+                continue;
+            }
+            break;
+        }
+
+        Livre livre = new Livre(titre, auteur, datePublication, nombreDePage, droitAcces, isbn);
         bibliotheque.createLivre(livre);
         System.out.println("Livre : " + titre + " est cree avec succes");
     }
@@ -169,7 +192,27 @@ public class ConsoleUI {
         scanner.nextLine();
         int numero = getIntInput("Entrez le numero du magazine: ");
         scanner.nextLine();
-        Magazine magazine = new Magazine(titre, auteur, datePublication, nombreDePage, numero);
+        DroitAccess droitAcces = null;
+        while (true) {
+            System.out.println("Sélectionnez le droit d'accès pour cette magazine :");
+            System.out.println("1. Etudiant");
+            System.out.println("2. Professeur");
+            System.out.println("3. Tout");
+            int choixAcces = getIntInput("Tapez votre choix : ");
+
+            if (choixAcces == 1) {
+                droitAcces = DroitAccess.Etudiant;
+            } else if (choixAcces == 2) {
+                droitAcces = DroitAccess.Professeur;
+            } else if (choixAcces == 3) {
+                droitAcces = DroitAccess.tout;
+            } else {
+                System.out.println("Choix invalide. Veuillez sélectionner une option valide.");
+                continue;
+            }
+            break;
+        }
+        Magazine magazine = new Magazine(titre, auteur, datePublication, nombreDePage, droitAcces, numero);
         bibliotheque.createMagazine(magazine);
         System.out.println("Magazine : " + titre + " est cree avec succes");
     }
@@ -186,7 +229,27 @@ public class ConsoleUI {
         scanner.nextLine();
         String domaine = getStringInput("Entrez le domaine du journal: ");
         scanner.nextLine();
-        JournalScientifique journalS = new JournalScientifique(titre, auteur, datePublication, nombreDePage, domaine);
+        DroitAccess droitAcces = null;
+        while (true) {
+            System.out.println("Sélectionnez le droit d'accès pour ce journal :");
+            System.out.println("1. Etudiant");
+            System.out.println("2. Professeur");
+            System.out.println("3. Tout");
+            int choixAcces = getIntInput("Tapez votre choix : ");
+
+            if (choixAcces == 1) {
+                droitAcces = DroitAccess.Etudiant;
+            } else if (choixAcces == 2) {
+                droitAcces = DroitAccess.Professeur;
+            } else if (choixAcces == 3) {
+                droitAcces = DroitAccess.tout;
+            } else {
+                System.out.println("Choix invalide. Veuillez sélectionner une option valide.");
+                continue;
+            }
+            break;
+        }
+        JournalScientifique journalS = new JournalScientifique(titre, auteur, datePublication, nombreDePage, domaine, droitAcces);
         bibliotheque.createJournalScientifique(journalS);
         System.out.println("Journal : " + titre + " est cree avec succes");
     }
@@ -205,7 +268,27 @@ public class ConsoleUI {
         scanner.nextLine();
         String domaine = getStringInput("Entrez le domaine du these: ");
         scanner.nextLine();
-        TheseUniversitaire theseU = new TheseUniversitaire(titre, auteur, datePublication, nombreDePage, universite, domaine);
+        DroitAccess droitAcces = null;
+        while (true) {
+            System.out.println("Sélectionnez le droit d'accès pour cette these :");
+            System.out.println("1. Etudiant");
+            System.out.println("2. Professeur");
+            System.out.println("3. Tout");
+            int choixAcces = getIntInput("Tapez votre choix : ");
+
+            if (choixAcces == 1) {
+                droitAcces = DroitAccess.Etudiant;
+            } else if (choixAcces == 2) {
+                droitAcces = DroitAccess.Professeur;
+            } else if (choixAcces == 3) {
+                droitAcces = DroitAccess.tout;
+            } else {
+                System.out.println("Choix invalide. Veuillez sélectionner une option valide.");
+                continue;
+            }
+            break;
+        }
+        TheseUniversitaire theseU = new TheseUniversitaire(titre, auteur, datePublication, nombreDePage, universite, domaine, droitAcces);
         bibliotheque.createTheseUniversitaire(theseU);
         System.out.println("These : " + titre + " est cree avec succes");
     }
@@ -249,6 +332,7 @@ public class ConsoleUI {
             System.out.println("3. Modifier la date de publication");
             System.out.println("4. Modifier le nombre de pages");
             System.out.println("5. Modifier l'ISBN");
+            System.out.println("6. Modifier le droit d'acces");
 
             int choix = getIntInput("Choisissez l'attribut à modifier: ");
             switch (choix) {
@@ -272,6 +356,30 @@ public class ConsoleUI {
                     String nouvelIsbn = getStringInput("Entrez le nouvel ISBN: ");
                     livre.setIsbn(nouvelIsbn);
                     break;
+                case 6:
+
+                    DroitAccess droitAcces = null;
+                    while (true) {
+                        System.out.println("Sélectionnez le nouveau droit d'accès pour ce livre :");
+                        System.out.println("1. Etudiant");
+                        System.out.println("2. Professeur");
+                        System.out.println("3. Tout");
+                        int choixAcces = getIntInput("Tapez votre choix : ");
+
+                        if (choixAcces == 1) {
+                            droitAcces = DroitAccess.Etudiant;
+                        } else if (choixAcces == 2) {
+                            droitAcces = DroitAccess.Professeur;
+                        } else if (choixAcces == 3) {
+                            droitAcces = DroitAccess.tout;
+                        } else {
+                            System.out.println("Choix invalide. Veuillez sélectionner une option valide.");
+                            continue;
+                        }
+                        break;
+                    }
+                    livre.setDroitAcces(droitAcces);
+                    break;
                 default:
                     System.out.println("Option invalide.");
                     return;
@@ -293,6 +401,7 @@ public class ConsoleUI {
             System.out.println("3. Modifier la date de publication");
             System.out.println("4. Modifier le nombre de pages");
             System.out.println("5. Modifier le numero");
+            System.out.println("6. Modifier le droit d'access");
 
             int choix = getIntInput("Choisissez l'attribut à modifier: ");
             switch (choix) {
@@ -316,6 +425,31 @@ public class ConsoleUI {
                     int nouvelNumero = getIntInput("Entrez le nouvel Numero: ");
                     magazine.setNumero(nouvelNumero);
                     break;
+                case 6:
+
+                    DroitAccess droitAcces = null;
+                    while (true) {
+                        System.out.println("Sélectionnez le nouveau droit d'accès pour ce livre :");
+                        System.out.println("1. Etudiant");
+                        System.out.println("2. Professeur");
+                        System.out.println("3. Tout");
+                        int choixAcces = getIntInput("Tapez votre choix : ");
+
+                        if (choixAcces == 1) {
+                            droitAcces = DroitAccess.Etudiant;
+                        } else if (choixAcces == 2) {
+                            droitAcces = DroitAccess.Professeur;
+                        } else if (choixAcces == 3) {
+                            droitAcces = DroitAccess.tout;
+                        } else {
+                            System.out.println("Choix invalide. Veuillez sélectionner une option valide.");
+                            continue;
+                        }
+                        break;
+                    }
+
+                    magazine.setDroitAcces(droitAcces);
+                    break;
                 default:
                     System.out.println("Option invalide.");
                     return;
@@ -337,6 +471,7 @@ public class ConsoleUI {
             System.out.println("3. Modifier la date de publication");
             System.out.println("4. Modifier le nombre de pages");
             System.out.println("5. Modifier le domaine de recherche");
+            System.out.println("6. Modifier le droit d'access");
 
             int choix = getIntInput("Choisissez l'attribut à modifier: ");
             switch (choix) {
@@ -360,6 +495,30 @@ public class ConsoleUI {
                     String nouvelDomaine = getStringInput("Entrez le nouvel domaine de recherche: ");
                     journal.setDomaine(nouvelDomaine);
                     break;
+                case 6:
+                    DroitAccess droitAcces = null;
+                    while (true) {
+                        System.out.println("Sélectionnez le nouveau droit d'accès pour ce journal :");
+                        System.out.println("1. Etudiant");
+                        System.out.println("2. Professeur");
+                        System.out.println("3. Tout");
+                        int choixAcces = getIntInput("Tapez votre choix : ");
+
+                        if (choixAcces == 1) {
+                            droitAcces = DroitAccess.Etudiant;
+                        } else if (choixAcces == 2) {
+                            droitAcces = DroitAccess.Professeur;
+                        } else if (choixAcces == 3) {
+                            droitAcces = DroitAccess.tout;
+                        } else {
+                            System.out.println("Choix invalide. Veuillez sélectionner une option valide.");
+                            continue;
+                        }
+                        break;
+                    }
+
+                    journal.setDroitAcces(droitAcces);
+                    break;
                 default:
                     System.out.println("Option invalide.");
             }
@@ -381,6 +540,7 @@ public class ConsoleUI {
             System.out.println("4. Modifier le nombre de pages");
             System.out.println("5. Modifier l'universite'");
             System.out.println("6. Modifier le domaine de recherche");
+            System.out.println("7. Modifier le droit d'access");
 
             int choix = getIntInput("Choisissez l'attribut à modifier: ");
             switch (choix) {
@@ -407,6 +567,30 @@ public class ConsoleUI {
                 case 6:
                     String nouvelDomaine = getStringInput("Entrez le nouvel domaine de recherche: ");
                     these.setDomaine(nouvelDomaine);
+                    break;
+                case 7 :
+
+                    DroitAccess droitAcces = null;
+                    while (true) {
+                        System.out.println("Sélectionnez le nouveau droit d'accès pour cette these :");
+                        System.out.println("1. Etudiant");
+                        System.out.println("2. Professeur");
+                        System.out.println("3. Tout");
+                        int choixAcces = getIntInput("Tapez votre choix : ");
+
+                        if (choixAcces == 1) {
+                            droitAcces = DroitAccess.Etudiant;
+                        } else if (choixAcces == 2) {
+                            droitAcces = DroitAccess.Professeur;
+                        } else if (choixAcces == 3) {
+                            droitAcces = DroitAccess.tout;
+                        } else {
+                            System.out.println("Choix invalide. Veuillez sélectionner une option valide.");
+                            continue;
+                        }
+                        break;
+                    }
+                    these.setDroitAcces(droitAcces);
                     break;
                 default:
                     System.out.println("Option invalide.");
@@ -854,16 +1038,15 @@ public class ConsoleUI {
         System.out.println("\n=== GESTION DES EMPRUNTS ===");
 
         int utilisateurId = getIntInput("Entrez l'ID de l'utilisateur: ");
-        Etudiant etudiant = etudiantService.getEtudiantById(utilisateurId);
-        Professeur prof = professeurService.getProfesseurById(utilisateurId);
-        Utilisateur utilisateur = bibliotheque.getUtilisateurById(utilisateurId);
 
-        if (etudiant == null && prof == null) {
+        // Verification des role
+        Utilisateur utilisateur = bibliotheque.getUtilisateurById(utilisateurId);
+        if (utilisateur == null) {
             System.out.println("Utilisateur non trouvé.");
             return;
         }
 
-        int documentId = getIntInput("Entrez l'ID du document à réserver: ");
+        int documentId = getIntInput("Entrez l'ID du document à emprunter: ");
         Document document = bibliotheque.getDocumentById(documentId);
 
         if (document == null) {
@@ -871,36 +1054,35 @@ public class ConsoleUI {
             return;
         }
 
-        bibliotheque.empruntDocument(document,utilisateur);
+
+        bibliotheque.empruntDocument(document, utilisateur);
         System.out.println("Document emprunté avec succès.");
     }
 
-    // Methode pour reserver document
+    // Gestion des réservations
     private void gestionReservations() {
         System.out.println("\n=== GESTION DES RÉSERVATIONS ===");
 
         int utilisateurId = getIntInput("Entrez l'ID de l'utilisateur: ");
 
-        Etudiant etudiant = etudiantService.getEtudiantById(utilisateurId);
-        Professeur prof = professeurService.getProfesseurById(utilisateurId);
-        Utilisateur utilisateur = bibliotheque.getUtilisateurById(utilisateurId);
-
-        if (etudiant == null) {
-            System.out.println("Etudiant non trouvé.");
+        // Check if the user is either a student or a professor
+        Utilisateur utilisateur = bibliotheque.getUtilisateurById(utilisateurId);  // Fetch user from the library
+        if (utilisateur == null) {
+            System.out.println("Utilisateur non trouvé.");
             return;
-        }else System.out.println("Professeur non trouve.");
+        }
 
         int documentId = getIntInput("Entrez l'ID du document à réserver: ");
-        Document document = bibliotheque.getDocumentById(documentId); // Replace with appropriate method based on document type
+        Document document = bibliotheque.getDocumentById(documentId); // Fetch the document
         if (document == null) {
             System.out.println("Document non trouvé.");
             return;
         }
 
-        bibliotheque.reserveDocument(document,utilisateur);
+        // Proceed with the reservation
+        bibliotheque.reserveDocument(document, utilisateur);
         System.out.println("Document réservé avec succès.");
     }
-
 
 
     /* ====================== Fin emprunter et reserver ======================*/
