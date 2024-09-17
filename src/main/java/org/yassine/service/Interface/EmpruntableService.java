@@ -1,11 +1,11 @@
 package org.yassine.service.Interface;
 
 
-import org.yassine.metier.Abstract.Utilisateur;
-import org.yassine.metier.JournalScientifique;
-import org.yassine.metier.Livre;
-import org.yassine.metier.Magazine;
-import org.yassine.metier.TheseUniversitaire;
+import org.yassine.model.Abstract.Utilisateur;
+import org.yassine.model.JournalScientifique;
+import org.yassine.model.Livre;
+import org.yassine.model.Magazine;
+import org.yassine.model.TheseUniversitaire;
 
 public interface EmpruntableService {
 

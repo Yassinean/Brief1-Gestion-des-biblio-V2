@@ -2,7 +2,7 @@ package org.yassine.service.Interface.Document;
 
 
 
-import org.yassine.metier.Magazine;
+import org.yassine.model.Magazine;
 
 import java.util.List;
 

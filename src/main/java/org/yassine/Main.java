@@ -1,18 +1,18 @@
 package org.yassine;
 
-import org.yassine.metier.Bibliotheque;
-import org.yassine.persistance.Implementation.documentImp.JournalScientifiqueDaoImp;
-import org.yassine.persistance.Implementation.documentImp.LivreDaoImp;
-import org.yassine.persistance.Implementation.documentImp.MagazineDaoImp;
-import org.yassine.persistance.Implementation.documentImp.TheseUniversitaireDaoImp;
-import org.yassine.persistance.Implementation.userImp.EtudiantDaoImp;
-import org.yassine.persistance.Implementation.userImp.ProfesseurDaoImp;
-import org.yassine.persistance.Interface.Document.JournalScientifiqueDaoInterface;
-import org.yassine.persistance.Interface.Document.LivreDaoInterface;
-import org.yassine.persistance.Interface.Document.MagazineDaoInterface;
-import org.yassine.persistance.Interface.Document.TheseUniversitaireDaoInterface;
-import org.yassine.persistance.Interface.Utilisateur.EtudiantDaoInterface;
-import org.yassine.persistance.Interface.Utilisateur.ProfesseurDaoInterface;
+import org.yassine.model.Bibliotheque;
+import org.yassine.DAO.Implementation.documentImp.JournalScientifiqueDaoImp;
+import org.yassine.DAO.Implementation.documentImp.LivreDaoImp;
+import org.yassine.DAO.Implementation.documentImp.MagazineDaoImp;
+import org.yassine.DAO.Implementation.documentImp.TheseUniversitaireDaoImp;
+import org.yassine.DAO.Implementation.userImp.EtudiantDaoImp;
+import org.yassine.DAO.Implementation.userImp.ProfesseurDaoImp;
+import org.yassine.DAO.Interface.Document.JournalScientifiqueDaoInterface;
+import org.yassine.DAO.Interface.Document.LivreDaoInterface;
+import org.yassine.DAO.Interface.Document.MagazineDaoInterface;
+import org.yassine.DAO.Interface.Document.TheseUniversitaireDaoInterface;
+import org.yassine.DAO.Interface.Utilisateur.EtudiantDaoInterface;
+import org.yassine.DAO.Interface.Utilisateur.ProfesseurDaoInterface;
 import org.yassine.presentation.ConsoleUI;
 import org.yassine.service.Implementation.Document.LivreServiceImp;
 import org.yassine.service.Implementation.Document.MagazineServiceImp;
@@ -24,8 +24,7 @@ import org.yassine.service.Implementation.Utilisateur.ProfesseurServiceImp;
 
 
 import java.sql.SQLException;
-import java.util.Collection;
-import java.util.Iterator;
+
 
 public class Main {
     public static void main(String[] args) throws SQLException {

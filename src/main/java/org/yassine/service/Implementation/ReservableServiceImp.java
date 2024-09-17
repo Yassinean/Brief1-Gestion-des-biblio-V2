@@ -1,10 +1,10 @@
 package org.yassine.service.Implementation;
-import org.yassine.metier.Abstract.Utilisateur;
-import org.yassine.metier.JournalScientifique;
-import org.yassine.metier.Livre;
-import org.yassine.metier.Magazine;
-import org.yassine.metier.TheseUniversitaire;
-import org.yassine.persistance.Implementation.ReservableImp;
+import org.yassine.model.Abstract.Utilisateur;
+import org.yassine.model.JournalScientifique;
+import org.yassine.model.Livre;
+import org.yassine.model.Magazine;
+import org.yassine.model.TheseUniversitaire;
+import org.yassine.DAO.Implementation.ReservableImp;
 import org.yassine.service.Interface.ReservableService;
 
 public class ReservableServiceImp implements ReservableService {

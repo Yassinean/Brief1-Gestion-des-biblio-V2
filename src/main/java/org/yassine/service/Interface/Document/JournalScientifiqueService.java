@@ -2,7 +2,7 @@ package org.yassine.service.Interface.Document;
 
 
 
-import org.yassine.metier.JournalScientifique;
+import org.yassine.model.JournalScientifique;
 
 import java.util.List;
 

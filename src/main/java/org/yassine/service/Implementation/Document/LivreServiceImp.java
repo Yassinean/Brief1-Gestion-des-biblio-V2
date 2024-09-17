@@ -1,7 +1,7 @@
 package org.yassine.service.Implementation.Document;
 
-import org.yassine.metier.Livre;
-import org.yassine.persistance.Interface.Document.LivreDaoInterface;
+import org.yassine.model.Livre;
+import org.yassine.DAO.Interface.Document.LivreDaoInterface;
 import org.yassine.service.Interface.Document.LivreService;
 
 import java.util.List;

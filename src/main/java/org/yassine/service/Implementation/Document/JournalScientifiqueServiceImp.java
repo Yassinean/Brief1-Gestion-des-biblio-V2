@@ -1,7 +1,7 @@
 package org.yassine.service.Implementation.Document;
 
-import org.yassine.metier.JournalScientifique;
-import org.yassine.persistance.Interface.Document.JournalScientifiqueDaoInterface;
+import org.yassine.model.JournalScientifique;
+import org.yassine.DAO.Interface.Document.JournalScientifiqueDaoInterface;
 import org.yassine.service.Interface.Document.JournalScientifiqueService;
 
 import java.util.List;
@@ -36,17 +36,8 @@ public class JournalScientifiqueServiceImp implements JournalScientifiqueService
 
     @Override
     public void updateJournalScientifique(Integer id, JournalScientifique js) {
-        JournalScientifique magazineUpdate = journalScientifiqueDao.displayJournalScientifique(id);
-        if (magazineUpdate == null){
-            System.out.println("JournalScientifique avec ID " + id + " non trouve !");
-        }
-
-        magazineUpdate.setTitre(js.getTitre());
-        magazineUpdate.setAuteur(js.getAuteur());
-        magazineUpdate.setDatePublication(js.getDatePublication());
-        magazineUpdate.setNombreDePages(js.getNombreDePages());
-
-        journalScientifiqueDao.updateJournalScientifique(magazineUpdate);
+        JournalScientifique journalUpdate = journalScientifiqueDao.displayJournalScientifique(id);
+        journalScientifiqueDao.updateJournalScientifique(id,journalUpdate);
     }
 
     @Override

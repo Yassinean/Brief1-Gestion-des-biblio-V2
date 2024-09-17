@@ -1,14 +1,10 @@
 package org.yassine.utilitaire;
 
-import org.yassine.metier.Abstract.Document;
-import org.yassine.metier.Abstract.DroitAccess;
-import org.yassine.metier.Abstract.Utilisateur;
-import org.yassine.metier.Etudiant;
-import org.yassine.metier.Professeur;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
+import org.yassine.model.Abstract.Document;
+import org.yassine.model.Abstract.DroitAccess;
+import org.yassine.model.Abstract.Utilisateur;
+import org.yassine.model.Etudiant;
+import org.yassine.model.Professeur;
 
 public class UserCheck {
     private UserCheck() {

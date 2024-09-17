@@ -1,7 +1,7 @@
 package org.yassine.service.Implementation.Document;
 
-import org.yassine.metier.Magazine;
-import org.yassine.persistance.Interface.Document.MagazineDaoInterface;
+import org.yassine.model.Magazine;
+import org.yassine.DAO.Interface.Document.MagazineDaoInterface;
 import org.yassine.service.Interface.Document.MagazineService;
 
 import java.util.List;

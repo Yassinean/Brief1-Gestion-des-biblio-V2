@@ -2,7 +2,7 @@ package org.yassine.service.Interface.Document;
 
 
 
-import org.yassine.metier.TheseUniversitaire;
+import org.yassine.model.TheseUniversitaire;
 
 import java.util.List;
 

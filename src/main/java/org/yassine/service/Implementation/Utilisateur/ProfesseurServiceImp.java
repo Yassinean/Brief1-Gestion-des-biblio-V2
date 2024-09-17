@@ -1,8 +1,8 @@
 package org.yassine.service.Implementation.Utilisateur;
 
 
-import org.yassine.metier.Professeur;
-import org.yassine.persistance.Interface.Utilisateur.ProfesseurDaoInterface;
+import org.yassine.model.Professeur;
+import org.yassine.DAO.Interface.Utilisateur.ProfesseurDaoInterface;
 import org.yassine.service.Interface.Utilisateur.ProfesseurService;
 
 import java.util.List;

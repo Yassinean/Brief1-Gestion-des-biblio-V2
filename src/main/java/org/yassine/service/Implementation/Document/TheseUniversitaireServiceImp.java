@@ -1,8 +1,8 @@
 package org.yassine.service.Implementation.Document;
 
 
-import org.yassine.metier.TheseUniversitaire;
-import org.yassine.persistance.Interface.Document.TheseUniversitaireDaoInterface;
+import org.yassine.model.TheseUniversitaire;
+import org.yassine.DAO.Interface.Document.TheseUniversitaireDaoInterface;
 import org.yassine.service.Interface.Document.TheseUniversitaireService;
 
 import java.util.List;

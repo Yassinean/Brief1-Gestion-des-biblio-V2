@@ -1,7 +1,7 @@
 package org.yassine.service.Implementation;
-import org.yassine.metier.*;
-import org.yassine.metier.Abstract.Utilisateur;
-import org.yassine.persistance.Implementation.EmpruntableDaoImp;
+import org.yassine.model.*;
+import org.yassine.model.Abstract.Utilisateur;
+import org.yassine.DAO.Implementation.EmpruntableDaoImp;
 import org.yassine.service.Interface.EmpruntableService;
 import java.util.logging.Logger;
 

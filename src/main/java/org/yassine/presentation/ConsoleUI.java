@@ -1,10 +1,10 @@
 package org.yassine.presentation;
 
-import org.yassine.metier.*;
+import org.yassine.model.*;
 
-import org.yassine.metier.Abstract.Document;
-import org.yassine.metier.Abstract.DroitAccess;
-import org.yassine.metier.Abstract.Utilisateur;
+import org.yassine.model.Abstract.Document;
+import org.yassine.model.Abstract.DroitAccess;
+import org.yassine.model.Abstract.Utilisateur;
 import org.yassine.service.Interface.Document.JournalScientifiqueService;
 import org.yassine.service.Interface.Document.LivreService;
 import org.yassine.service.Interface.Document.MagazineService;
@@ -395,6 +395,7 @@ public class ConsoleUI {
         System.out.println("=== MODIFIER UN MAGAZINE ===");
         int id = getIntInput("Entrez l'ID du magazine à modifier: ");
         Magazine magazine = bibliotheque.getMagazineById(id);
+        System.out.println(magazine);
         if (magazine != null) {
             System.out.println("1. Modifier le titre");
             System.out.println("2. Modifier l'auteur");
@@ -465,7 +466,7 @@ public class ConsoleUI {
         System.out.println("=== MODIFIER UN JOURNAL SCIENTIFIQUE ===");
         int id = getIntInput("Entrez l'ID  du journal à modifier: ");
         JournalScientifique journal = bibliotheque.getJournalScientifiqueById(id);
-        if (journal != null) {
+
             System.out.println("1. Modifier le titre");
             System.out.println("2. Modifier l'auteur");
             System.out.println("3. Modifier la date de publication");
@@ -523,10 +524,6 @@ public class ConsoleUI {
                     System.out.println("Option invalide.");
             }
             bibliotheque.updateJournalScientifique(id, journal);
-            System.out.println("Jounal : " + journal.getTitre() + " modifié avec succès.");
-        } else {
-            System.out.println("Journal introuvable.");
-        }
     }
 
     private void modifierTheseUniversitaire() {
@@ -1003,7 +1000,7 @@ public class ConsoleUI {
     private void rechercherProfesseur() {
         System.out.println("Entrez le nom du professeur à rechercher :");
         String nom = scanner.nextLine();
-        List<Professeur> resultats = (List<Professeur>) bibliotheque.getProfesseurByName(nom);
+        List<Professeur> resultats = bibliotheque.getProfesseurByName(nom);
         if (resultats.isEmpty()) {
             System.out.println("Aucun professeur trouvé pour le nom : " + nom);
         } else {

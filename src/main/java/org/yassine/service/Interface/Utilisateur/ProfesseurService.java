@@ -1,7 +1,7 @@
 package org.yassine.service.Interface.Utilisateur;
 
 
-import org.yassine.metier.Professeur;
+import org.yassine.model.Professeur;
 
 import java.util.List;
 
